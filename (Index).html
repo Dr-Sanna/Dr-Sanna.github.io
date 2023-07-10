@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Dr Sanna</title>
+    <style>
+        .link {
+            text-decoration: none;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            background-color: darkgray;
+        }
+
+        #title-container {
+            width: 33.33%;
+            max-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: darkgray;
+            color: white;
+        }
+
+        #table-container {
+            width: 66.67%;
+            max-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 20px;
+            background-color: darkgray;
+        }
+
+        table {
+            border-spacing: 10px;
+            border-collapse: separate;
+            width: 100%;
+            height: 100%;
+        }
+
+        td {
+            border-radius: 10px;
+            transition: background-color 0.3s;
+            border: 2px solid black;
+            background-color: white;
+            box-sizing: border-box;
+            overflow: hidden;
+            padding: 0;
+            position: relative;
+        }
+
+        .cell-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            word-wrap: break-word;
+        }
+        
+        #table-container > table tr > td > .cell-content {
+            font-weight: bold;
+            color: black;
+        }
+        
+        .square-cell {
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            padding: 10px;
+            position: relative;
+        }
+
+        .square-cell .cell-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #table-container td:hover {
+            background-color: lightblue;
+            cursor: pointer;
+            outline: 3px solid black;
+        }
+
+        #title-container tr:first-child .cell-content {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-family: "Arial Black", Arial, sans-serif;
+        }
+        
+        #table-container tr .cell-content {
+            font-size: 0.8em;
+            font-weight: normal;
+            text-transform: none;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="title-container">
+        <table>
+            <tr>
+                <td style="height: 33.33%; background-color: darkgray;"><div class="cell-content">Dr Sanna</div></td>
+            </tr>
+            <tr>
+                <td style="height: 66.67%; background-color: lightgray;"><div class="cell-content"></div></td>
+            </tr>
+        </table>
+    </div>
+    <div id="table-container">
+        <table>
+            <tr>
+                <td class="square-cell"><div class="cell-content">SCIENCES FONDAMENTALES</div></td>
+                <td class="square-cell"><div class="cell-content">BIOMATERIAUX</div></td>
+                <td class="square-cell"><a href="http://localhost:8000/les%20principales%20affections%20buccalesmodifie_modifie.html" class="cell-content link" style="font-weight: bold;">MOCO</a></td>
+            </tr>
+            <tr>
+                <td class="square-cell"><div class="cell-content">OCE</div></td>
+                <td class="square-cell"><div class="cell-content">PARO/IMPLANTO</div></td>
+                <td class="square-cell"><div class="cell-content">PROTHESES</div></td>
+            </tr>
+            <tr>
+                <td class="square-cell"><div class="cell-content">PEDO</div></td>
+                <td class="square-cell"><div class="cell-content">OCCLUSO</div></td>
+                <td class="square-cell"><div class="cell-content">Ressources utiles</div></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
