@@ -154,13 +154,12 @@
       for (let i = 1; i <= 9; i++) {
         $('#cell-' + i).click(function(){
           const cellData = cellDataMap['cell-' + i];
-          let text = '';
-          for (let j = 3; j <= 11; j++) {
-            if (cellData[j] !== null) {
-              text += cellData[j] + ' ';
+          for (let j = 1; j <= 9; j++) {
+            const text = cellData[j + 2];  // We start from position 3 in the JSON file
+            if (text !== null) {
+              $('#cell-' + j).find('.content-text').text(text);
             }
           }
-          $(this).find('.content-text').text(text.trim());
         });
       }
     });
