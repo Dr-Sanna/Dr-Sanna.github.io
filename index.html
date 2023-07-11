@@ -145,21 +145,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-    $(".square-cell:contains('SCIENCES FONDAMENTALES')").click(function(){
-        $("#table-container td").animate({
-            opacity: 0
-        }, 1000, function() {
-            $(".square-cell div").each(function(index) {
-                // change the content of each cell
-                $(this).text("New content " + (index + 1));
+    // Tableau pour sauvegarder le texte original de chaque cellule
+    var originalText = [];
+    var newTextAdded = false;
+
+    $(".cell-content").each(function(index){
+        // Enregistrer le texte original
+        originalText[index] = $(this).text();
+    });
+
+    $(".square-cell").click(function(){
+        if (!newTextAdded) {
+            $(".cell-content").each(function(index){
+                $(this).fadeOut("fast", function(){
+                    $(this).text("New content " + (index + 1));
+                    $(this).fadeIn("fast");
+                });
             });
-            // expand and reveal new content
-            $("#table-container td").animate({
-                opacity: 1
-            }, 1000);
-        });
+            newTextAdded = true;
+        } else if ($(this).is(":contains('SCIENCES FONDAMENTALES')")) {
+            $(".cell-content").each(function(index){
+                $(this).fadeOut("fast", function(){
+                    $(this).text(originalText[index]);
+                    $(this).fadeIn("fast");
+                });
+            });
+            newTextAdded = false;
+        }
     });
 });
 </script>
+
 </body>
 </html>
