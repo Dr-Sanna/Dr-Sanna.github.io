@@ -155,25 +155,37 @@ $(document).ready(function(){
     var originalText = [];
     var newTextAdded = false;
 
+    // Nouveaux contenus pour chaque cellule lorsqu'ils sont cliqués
+    var newContent = [
+        ["SCIENCES FONDAMENTALES", "ANATOMIE", "HISTOLOGIE"],
+        ["BIOMATERIAUX", "COMPOSITE", "..."],
+        // Ajouter d'autres contenus ici...
+    ];
+
     $(".content-text").each(function(index){
         // Enregistrer le texte original
         originalText[index] = $(this).text();
     });
 
-    $(".square-cell:not(#first-cell)").click(function(){
+    $(".square-cell").click(function(){
+        var cellIndex = $(".square-cell").index(this);
+        
         if (!newTextAdded) {
             $(".content-text").each(function(index){
                 $(this).fadeOut("fast", function(){
-                    $(this).text("New content " + (index + 1));
+                    if (index == 0) {
+                        // Afficher l'icône de flèche
+                        $("#first-cell .arrow-icon").css("display", "inline");
+                        // Cacher le texte dans la première cellule
+                        $("#first-cell .content-text").hide();
+                    } else {
+                        $(this).text(newContent[cellIndex][index]);
+                    }
                     $(this).fadeIn("fast");
                 });
             });
             newTextAdded = true;
-            // Afficher l'icône de flèche
-            $("#first-cell .arrow-icon").css("display", "inline");
-            // Cacher le texte dans la première cellule
-            $("#first-cell .content-text").hide();
-        } 
+        }
     });
 
     // Ajouter un gestionnaire d'événements pour le clic sur la première cellule
