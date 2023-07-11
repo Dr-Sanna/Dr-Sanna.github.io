@@ -142,21 +142,17 @@
             </tr>
         </table>
     </div>
-    <script>
-  // Charger le fichier JSON
-  fetch('/data/MainMenu.json')
-    .then(response => response.json())
-    .then(data => {
-      // Créer une map pour accéder facilement aux données
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $.getJSON("/data/MainMenu.json", function(data) {
       const cellDataMap = {};
       data.forEach(item => {
         cellDataMap[item['1']] = item;
       });
 
-      // Ajouter les gestionnaires d'événements click aux cellules
       for (let i = 1; i <= 9; i++) {
-        const cell = document.getElementById('cell-' + i);
-        cell.addEventListener('click', () => {
+        $('#cell-' + i).click(function(){
           const cellData = cellDataMap['cell-' + i];
           let text = '';
           for (let j = 3; j <= 11; j++) {
@@ -164,10 +160,11 @@
               text += cellData[j] + ' ';
             }
           }
-          cell.querySelector('.content-text').textContent = text.trim();
+          $(this).find('.content-text').text(text.trim());
         });
       }
     });
+  });
 </script>
 </body>
 </html>
