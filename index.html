@@ -2,10 +2,6 @@
 <html lang="fr">
 <head>
     <title>Dr Sanna</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
         .link {
             text-decoration: none;
@@ -146,36 +142,5 @@
             </tr>
         </table>
     </div>
-    <script>
-    var cellContent = {
-        "cell-1": {
-            "original": "SCIENCES FONDAMENTALES",
-            "new": "ANATOMIE"
-        },
-        "cell-2": {
-            "original": "BIOMATERIAUX",
-            "new": "COMPOSITE"
-        },
-        "cell-3": {
-            "original": "MOCO",
-            "new": "HISTOLOGIE"
-        },
-        // Ajoutez d'autres contenus ici...
-    };
-
-    var originalContent = true;
-
-    $(".square-cell").click(function() {
-        var cellId = $(this).attr('id');
-
-        if (originalContent) {
-            $(this).find(".content-text").text(cellContent[cellId].new);
-        } else {
-            $(this).find(".content-text").text(cellContent[cellId].original);
-        }
-
-        originalContent = !originalContent;
-    });
-    </script>
 </body>
 </html>
