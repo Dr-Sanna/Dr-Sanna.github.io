@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Dr Sanna</title>
+    <style>
+        .link {
+            text-decoration: none;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            background-color: darkgray;
+        }
+
+        #title-container {
+            width: 33.33%;
+            max-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: darkgray;
+            color: white;
+        }
+
+        #table-container {
+            width: 66.67%;
+            max-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 20px;
+            background-color: darkgray;
+        }
+
+        table {
+            border-spacing: 10px;
+            border-collapse: separate;
+            width: 100%;
+            height: 100%;
+        }
+
+        td {
+            border-radius: 10px;
+            transition: background-color 0.3s;
+            border: 2px solid black;
+            background-color: white;
+            box-sizing: border-box;
+            overflow: hidden;
+            padding: 0;
+            position: relative;
+        }
+
+        .cell-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            word-wrap: break-word;
+        }
+        
+        #table-container > table tr > td > .cell-content {
+            font-weight: bold;
+            color: black;
+        }
+        
+        .square-cell {
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            padding: 10px;
+            position: relative;
+        }
+
+        .square-cell .cell-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #table-container td:hover {
+            background-color: lightblue;
+            cursor: pointer;
+            outline: 3px solid black;
+        }
+
+        #title-container tr:first-child .cell-content {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-family: "Arial Black", Arial, sans-serif;
+        }
+        
+        #table-container tr .cell-content {
+            font-size: 0.8em;
+            font-weight: normal;
+            text-transform: none;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="title-container">
+        <table>
+            <tr>
+                <td style="height: 33.33%; background-color: darkgray;"><div class="cell-content">Dr Sanna</div></td>
+            </tr>
+            <tr>
+                <td style="height: 66.67%; background-color: lightgray;"><div class="cell-content"></div></td>
+            </tr>
+        </table>
+    </div>
+    <div id="table-container">
+        <table>
+            <tr>
+                <td class="square-cell" id="cell-1"><div class="cell-content"><span class="content-text">SCIENCES FONDAMENTALES</span></div></td>
+                <td class="square-cell" id="cell-2"><div class="cell-content"><span class="content-text">BIOMATERIAUX</span></div></td>
+                <td class="square-cell" id="cell-3"><div class="cell-content"><span class="content-text">MOCO</span></div></td>
+            </tr>
+            <tr>
+                <td class="square-cell" id="cell-4"><div class="cell-content">OCE</div></td>
+                <td class="square-cell" id="cell-5"><div class="cell-content">PARO/IMPLANTO</div></td>
+                <td class="square-cell" id="cell-6"><div class="cell-content">PROTHESES</div></td>
+            </tr>
+            <tr>
+                <td class="square-cell" id="cell-7"><div class="cell-content">PEDO</div></td>
+                <td class="square-cell" id="cell-8"><div class="cell-content">OCCLUSO</div></td>
+                <td class="square-cell" id="cell-9"><div class="cell-content">Ressources utiles</div></td>
+            </tr>
+        </table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    let initialContent = {}; // Object to store initial content
+    let isBack = false; // State to track if back button was clicked
+
+    $.getJSON("/data/MainMenu.json", function(data) {
+      const cellDataMap = {};
+      data.forEach(item => {
+        cellDataMap[item['1']] = item;
+      });
+
+      // Save initial content from MainMenu in JSON
+      initialContent = cellDataMap["MainMenu"];
+
+      for (let i = 1; i <= 10; i++) {
+        $('#cell-' + i).click(function(){
+          // If the first cell was clicked and we are in a submenu, restore the initial content
+          if (isBack && i === 1) {
+            const cellData = initialContent;
+            for (let j = 1; j <= 10; j++) {
+              const text = cellData[j + 1];
+              if (text) { // only update when text is not null
+                $('#cell-' + j + ' .cell-content').text(text);
+              }
+            }
+            isBack = false; // Reset the isBack state
+          } else if (!isBack) { // Only switch to submenu when not already in a submenu
+            const cellData = cellDataMap['cell-' + i];
+            for (let j = 1; j <= 10; j++) {
+              // Clear all cells before updating
+              $('#cell-' + j + ' .cell-content').text('');
+            }
+            for (let j = 1; j <= 10; j++) {
+              const text = cellData[j + 1];
+              if (text) { // only update when text is not null
+                $('#cell-' + j + ' .cell-content').text(text);
+              }
+            }
+            isBack = true; // Set the isBack state after displaying submenu
+          }
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
