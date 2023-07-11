@@ -155,7 +155,7 @@
         $('#cell-' + i).click(function(){
           const cellData = cellDataMap['cell-' + i];
           for (let j = 1; j <= 9; j++) {
-            const text = cellData[j + 2] || '';  // We use an empty string if the value is null
+            const text = cellData[j + 2] !== null ? cellData[j + 2] : '';
             $('#cell-' + j).find('.content-text').text(text);
           }
         });
@@ -163,6 +163,5 @@
     });
   });
 </script>
-
 </body>
 </html>
