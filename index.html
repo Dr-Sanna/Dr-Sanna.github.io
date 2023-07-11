@@ -127,7 +127,12 @@
     <div id="table-container">
         <table>
             <tr>
-                <td class="square-cell"><div class="cell-content"><i class="fas fa-arrow-left" style="display: none;"></i>SCIENCES FONDAMENTALES</div></td>
+                <td class="square-cell">
+    <div class="cell-content">
+        <i class="fas fa-arrow-left" id="arrow-icon" style="display: none;"></i>
+        <div id="text-content">SCIENCES FONDAMENTALES</div>
+    </div>
+</td>
                 <td class="square-cell"><div class="cell-content">BIOMATERIAUX</div></td>
                 <td class="square-cell"><a href="/les%20principales%20affections%20buccalesmodifie_modifie.html" class="cell-content link" style="font-weight: bold;">MOCO</a></td>
             </tr>
@@ -165,8 +170,9 @@ $(document).ready(function(){
             });
             newTextAdded = true;
             // Afficher l'icône de flèche
-            $(".cell-content:contains('SCIENCES FONDAMENTALES') i").show();
-        } else if ($(this).is(":contains('SCIENCES FONDAMENTALES')")) {
+            $("#arrow-icon").show();
+            $("#text-content").hide();
+        } else if ($("#arrow-icon").is(":visible")) {
             $(".cell-content").each(function(index){
                 $(this).fadeOut("fast", function(){
                     $(this).text(originalText[index]);
@@ -175,7 +181,8 @@ $(document).ready(function(){
             });
             newTextAdded = false;
             // Cacher l'icône de flèche
-            $(".cell-content:contains('SCIENCES FONDAMENTALES') i").hide();
+            $("#arrow-icon").hide();
+            $("#text-content").show();
         }
     });
 });
