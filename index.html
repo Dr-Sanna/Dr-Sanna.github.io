@@ -127,10 +127,10 @@
     <div id="table-container">
         <table>
             <tr>
-                <td class="square-cell">
+<td class="square-cell">
     <div class="cell-content">
-        <i class="fas fa-arrow-left" id="arrow-icon" style="display: none;"></i>
-        <div id="text-content">SCIENCES FONDAMENTALES</div>
+        <span class="content-text">SCIENCES FONDAMENTALES</span>
+        <i class="fas fa-arrow-left arrow-icon" style="display: none;"></i>
     </div>
 </td>
                 <td class="square-cell"><div class="cell-content">BIOMATERIAUX</div></td>
@@ -155,14 +155,14 @@ $(document).ready(function(){
     var originalText = [];
     var newTextAdded = false;
 
-    $(".cell-content").each(function(index){
+    $(".content-text").each(function(index){
         // Enregistrer le texte original
         originalText[index] = $(this).text();
     });
 
     $(".square-cell").click(function(){
         if (!newTextAdded) {
-            $(".cell-content").each(function(index){
+            $(".content-text").each(function(index){
                 $(this).fadeOut("fast", function(){
                     $(this).text("New content " + (index + 1));
                     $(this).fadeIn("fast");
@@ -170,10 +170,9 @@ $(document).ready(function(){
             });
             newTextAdded = true;
             // Afficher l'icône de flèche
-            $("#arrow-icon").show();
-            $("#text-content").hide();
-        } else if ($("#arrow-icon").is(":visible")) {
-            $(".cell-content").each(function(index){
+            $(".arrow-icon").css("display", "inline");
+        } else if ($(".arrow-icon").css("display") === "inline") {
+            $(".content-text").each(function(index){
                 $(this).fadeOut("fast", function(){
                     $(this).text(originalText[index]);
                     $(this).fadeIn("fast");
@@ -181,8 +180,7 @@ $(document).ready(function(){
             });
             newTextAdded = false;
             // Cacher l'icône de flèche
-            $("#arrow-icon").hide();
-            $("#text-content").show();
+            $(".arrow-icon").css("display", "none");
         }
     });
 });
