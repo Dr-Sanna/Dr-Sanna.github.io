@@ -163,10 +163,12 @@ $(document).ready(function(){
     $(".square-cell").click(function(){
         if (!newTextAdded) {
             $(".content-text").each(function(index){
-                $(this).fadeOut("fast", function(){
-                    $(this).text("New content " + (index + 1));
-                    $(this).fadeIn("fast");
-                });
+                if($(this).parent().parent().attr('id') !== "first-cell"){
+                    $(this).fadeOut("fast", function(){
+                        $(this).text("New content " + (index + 1));
+                        $(this).fadeIn("fast");
+                    });
+                }
             });
             newTextAdded = true;
             // Afficher l'icône de flèche
@@ -180,10 +182,12 @@ $(document).ready(function(){
     $("#first-cell").click(function() {
         if (newTextAdded) {
             $(".content-text").each(function(index){
-                $(this).fadeOut("fast", function(){
-                    $(this).text(originalText[index]);
-                    $(this).fadeIn("fast");
-                });
+                if($(this).parent().parent().attr('id') !== "first-cell"){
+                    $(this).fadeOut("fast", function(){
+                        $(this).text(originalText[index]);
+                        $(this).fadeIn("fast");
+                    });
+                }
             });
             newTextAdded = false;
             // Cacher l'icône de flèche
