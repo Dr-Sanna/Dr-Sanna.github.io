@@ -127,7 +127,7 @@
     <div id="table-container">
         <table>
             <tr>
-<td class="square-cell">
+<td class="square-cell" id="first-cell">
     <div class="cell-content">
         <span class="content-text">SCIENCES FONDAMENTALES</span>
         <i class="fas fa-arrow-left arrow-icon" style="display: none;"></i>
@@ -171,7 +171,14 @@ $(document).ready(function(){
             newTextAdded = true;
             // Afficher l'icône de flèche
             $(".arrow-icon").css("display", "inline");
-        } else if ($(".arrow-icon").css("display") === "inline") {
+            // Cacher le texte dans la première cellule
+            $("#first-cell .content-text").hide();
+        } 
+    });
+
+    // Ajouter un gestionnaire d'événements pour le clic sur la première cellule
+    $("#first-cell").click(function() {
+        if (newTextAdded) {
             $(".content-text").each(function(index){
                 $(this).fadeOut("fast", function(){
                     $(this).text(originalText[index]);
@@ -181,6 +188,8 @@ $(document).ready(function(){
             newTextAdded = false;
             // Cacher l'icône de flèche
             $(".arrow-icon").css("display", "none");
+            // Afficher le texte dans la première cellule
+            $("#first-cell .content-text").show();
         }
     });
 });
