@@ -142,5 +142,32 @@
             </tr>
         </table>
     </div>
+    <script>
+  // Charger le fichier JSON
+  fetch('/data/MainMenu.json')
+    .then(response => response.json())
+    .then(data => {
+      // Créer une map pour accéder facilement aux données
+      const cellDataMap = {};
+      data.forEach(item => {
+        cellDataMap[item['1']] = item;
+      });
+
+      // Ajouter les gestionnaires d'événements click aux cellules
+      for (let i = 1; i <= 9; i++) {
+        const cell = document.getElementById('cell-' + i);
+        cell.addEventListener('click', () => {
+          const cellData = cellDataMap['cell-' + i];
+          let text = '';
+          for (let j = 3; j <= 11; j++) {
+            if (cellData[j] !== null) {
+              text += cellData[j] + ' ';
+            }
+          }
+          cell.querySelector('.content-text').textContent = text.trim();
+        });
+      }
+    });
+</script>
 </body>
 </html>
