@@ -160,8 +160,8 @@ $(document).ready(function(){
         originalText[index] = $(this).text();
     });
 
-    $(".square-cell").click(function(){
-        if (!newTextAdded || $(this).attr('id') !== "first-cell") {
+    $(".square-cell:not(#first-cell)").click(function(){
+        if (!newTextAdded) {
             $(".content-text").each(function(index){
                 $(this).fadeOut("fast", function(){
                     $(this).text("New content " + (index + 1));
