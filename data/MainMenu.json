@@ -34,7 +34,10 @@
             "text": "ANATOMIE DENTAIRE",
             "link": "anatomie_dentaire.html"
         },
-        "5": null,
+        "5": {
+            "text": "Vues 3D",
+            "link": "vues_3D.html"
+        },
         "6": "-",
         "7": "-",
         "8": "-",
