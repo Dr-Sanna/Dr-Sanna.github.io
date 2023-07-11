@@ -155,15 +155,14 @@
         $('#cell-' + i).click(function(){
           const cellData = cellDataMap['cell-' + i];
           for (let j = 1; j <= 9; j++) {
-            const text = cellData[j + 2];  // We start from position 3 in the JSON file
-            if (text !== null) {
-              $('#cell-' + j).find('.content-text').text(text);
-            }
+            const text = cellData[j + 2] || '';  // We use an empty string if the value is null
+            $('#cell-' + j).find('.content-text').text(text);
           }
         });
       }
     });
   });
 </script>
+
 </body>
 </html>
