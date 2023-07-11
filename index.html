@@ -3,6 +3,9 @@
 <head>
     <title>Dr Sanna</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
         .link {
             text-decoration: none;
@@ -127,84 +130,52 @@
     <div id="table-container">
         <table>
             <tr>
-<td class="square-cell" id="first-cell">
-    <div class="cell-content">
-        <span class="content-text">SCIENCES FONDAMENTALES</span>
-        <i class="fas fa-arrow-left arrow-icon" style="display: none;"></i>
-    </div>
-</td>
-                <td class="square-cell"><div class="cell-content">BIOMATERIAUX</div></td>
-                <td class="square-cell"><a href="/les%20principales%20affections%20buccalesmodifie_modifie.html" class="cell-content link" style="font-weight: bold;">MOCO</a></td>
+                <td class="square-cell" id="cell-1"><div class="cell-content"><span class="content-text">SCIENCES FONDAMENTALES</span></div></td>
+                <td class="square-cell" id="cell-2"><div class="cell-content"><span class="content-text">BIOMATERIAUX</span></div></td>
+                <td class="square-cell" id="cell-3"><div class="cell-content"><span class="content-text">MOCO</span></div></td>
             </tr>
             <tr>
-                <td class="square-cell"><div class="cell-content">OCE</div></td>
-                <td class="square-cell"><div class="cell-content">PARO/IMPLANTO</div></td>
-                <td class="square-cell"><div class="cell-content">PROTHESES</div></td>
+                <td class="square-cell" id="cell-4"><div class="cell-content">OCE</div></td>
+                <td class="square-cell" id="cell-5"><div class="cell-content">PARO/IMPLANTO</div></td>
+                <td class="square-cell" id="cell-6"><div class="cell-content">PROTHESES</div></td>
             </tr>
             <tr>
-                <td class="square-cell"><div class="cell-content">PEDO</div></td>
-                <td class="square-cell"><div class="cell-content">OCCLUSO</div></td>
-                <td class="square-cell"><div class="cell-content">Ressources utiles</div></td>
+                <td class="square-cell" id="cell-7"><div class="cell-content">PEDO</div></td>
+                <td class="square-cell" id="cell-8"><div class="cell-content">OCCLUSO</div></td>
+                <td class="square-cell" id="cell-9"><div class="cell-content">Ressources utiles</div></td>
             </tr>
         </table>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-    // Tableau pour sauvegarder le texte original de chaque cellule
-    var originalText = [];
-    var newTextAdded = false;
+    <script>
+    var cellContent = {
+        "cell-1": {
+            "original": "SCIENCES FONDAMENTALES",
+            "new": "ANATOMIE"
+        },
+        "cell-2": {
+            "original": "BIOMATERIAUX",
+            "new": "COMPOSITE"
+        },
+        "cell-3": {
+            "original": "MOCO",
+            "new": "HISTOLOGIE"
+        },
+        // Ajoutez d'autres contenus ici...
+    };
 
-    // Nouveaux contenus pour chaque cellule lorsqu'ils sont cliqués
-    var newContent = [
-        ["SCIENCES FONDAMENTALES", "ANATOMIE", "HISTOLOGIE"],
-        ["BIOMATERIAUX", "COMPOSITE", "..."],
-        // Ajouter d'autres contenus ici...
-    ];
+    var originalContent = true;
 
-    $(".content-text").each(function(index){
-        // Enregistrer le texte original
-        originalText[index] = $(this).text();
-    });
+    $(".square-cell").click(function() {
+        var cellId = $(this).attr('id');
 
-    $(".square-cell").click(function(){
-        var cellIndex = $(".square-cell").index(this);
-        
-        if (!newTextAdded) {
-            $(".content-text").each(function(index){
-                $(this).fadeOut("fast", function(){
-                    if (index == 0) {
-                        // Afficher l'icône de flèche
-                        $("#first-cell .arrow-icon").css("display", "inline");
-                        // Cacher le texte dans la première cellule
-                        $("#first-cell .content-text").hide();
-                    } else {
-                        $(this).text(newContent[cellIndex][index]);
-                    }
-                    $(this).fadeIn("fast");
-                });
-            });
-            newTextAdded = true;
+        if (originalContent) {
+            $(this).find(".content-text").text(cellContent[cellId].new);
+        } else {
+            $(this).find(".content-text").text(cellContent[cellId].original);
         }
-    });
 
-    // Ajouter un gestionnaire d'événements pour le clic sur la première cellule
-    $("#first-cell").click(function() {
-        if (newTextAdded) {
-            $(".content-text").each(function(index){
-                $(this).fadeOut("fast", function(){
-                    $(this).text(originalText[index]);
-                    $(this).fadeIn("fast");
-                });
-            });
-            newTextAdded = false;
-            // Cacher l'icône de flèche
-            $(".arrow-icon").css("display", "none");
-            // Afficher le texte dans la première cellule
-            $("#first-cell .content-text").show();
-        }
+        originalContent = !originalContent;
     });
-});
-</script>
+    </script>
 </body>
 </html>
