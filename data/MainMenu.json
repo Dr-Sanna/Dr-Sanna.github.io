@@ -61,11 +61,11 @@
         "2": "/images/arrow-left-solid.svg",
         "3": {
             "text": "LESIONS BUCCALES",
-            "link": "lesions_buccales.html"
+            "link": "/MOCO/lesions_buccales.html"
         },
         "4": {
             "text": "RISQUES MEDICAUX",
-            "link": "risques_medicaux.html"
+            "link": "/MOCO/risques_medicaux.html"
         },
         "5": "-",
         "6": "-",
