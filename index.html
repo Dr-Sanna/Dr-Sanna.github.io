@@ -10,7 +10,7 @@
   position: fixed;
   height: 100vh;
   width: 100vw;
-  background: #fff;
+  background: black;
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -209,9 +209,9 @@
                         }).text(cellDataItem.text);
                         // Empty the cell and append the link
                         cellContentElement.empty().append(link);
-                      } else if (cellDataItem === 'fa-arrow-left') {
+                      } else if (cellDataItem === '/images/arrow-left-solid.svg') {
                         // Create new icon element
-                        const icon = $('<i>').addClass('fas fa-arrow-left arrow-left-icon');
+                        const icon = $('<img>').attr('src', '/images/arrow-left-solid.svg').addClass('arrow-left-icon');
                         // Empty the cell and append the icon
                         cellContentElement.empty().append(icon);
                       } else {
@@ -240,7 +240,7 @@
                         cellContentElement.empty().append(link);
                       } else if (cellDataItem === 'fa-arrow-left') {
                         // Create new icon element
-                        const icon = $('<i>').addClass('fas fa-arrow-left arrow-left-icon');
+                        const icon = $('<img>').attr('src', '/images/arrow-left-solid.svg').addClass('arrow-left-icon');
                         // Empty the cell and append the icon
                         cellContentElement.empty().append(icon);
                       } else {
