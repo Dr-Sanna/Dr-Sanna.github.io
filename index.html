@@ -2,7 +2,8 @@
 <html lang="fr">
 <head>
     <title>Dr Sanna</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     <style>
        #loader {
   transition: all 0.3s ease-out;
@@ -256,7 +257,16 @@
           });
         });
 $(window).on("load", function() {
-  $("#loader").addClass("fadeOut");
+    if ('fonts' in document) {
+        Promise.all([
+            document.fonts.load('1em Arial Black')
+        ]).then(function () {
+            $("#loader").fadeOut("slow");
+        });
+    } else {
+        // Fallback for browsers that do not support the font loading API
+        $("#loader").fadeOut("slow");
+    }
 });
     </script>
 </body>
