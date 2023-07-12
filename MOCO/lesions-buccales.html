@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            background-color: #808080; /* Fond midgray */
+        }
+        
+        .container {
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
+
+        .left {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-right: 1px solid #000; /* Bordure droite */
+        }
+
+        .left .box {
+            overflow: hidden;
+            border-bottom: 1px solid #000; /* Bordure inférieure */
+        }
+        
+        /* Configuration pour 1/3 et 2/3 */
+        .left .box:first-child {
+            flex: 1;
+        }
+
+        .left .box:last-child {
+            flex: 2;
+            border-bottom: none; /* Pas de bordure inférieure sur la dernière boîte */
+        }
+
+        .right {
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        iframe {
+            flex-grow: 1;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <div class="box">
+                <iframe src="/MOCO/main-lesions-buccales.html"></iframe>
+            </div>
+            <div class="box">
+                <iframe src="/MOCO/lesions-blanches.html"></iframe>
+            </div>
+        </div>
+        <div class="right">
+            <iframe src="tableau.html"></iframe>
+        </div>
+    </div>
+</body>
+</html>
