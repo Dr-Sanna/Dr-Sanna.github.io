@@ -182,81 +182,79 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function(){
-          let initialContent = {}; // Object to store initial content
-          let isBack = false; // State to track if back button was clicked
+$(document).ready(function(){
+  let initialContent = {}; // Object to store initial content
+  let isBack = false; // State to track if back button was clicked
+  let menuTitles = {}; // Object to store menu titles
 
-          $.getJSON("/data/MainMenu.json", function(data) {
-            const cellDataMap = {};
-            data.forEach(item => {
-              cellDataMap[item['1']] = item;
-            });
+  // AJAX request to get the menu data
+  $.getJSON("/data/MainMenu.json", function(data) {
+    const cellDataMap = {};
+    data.forEach(item => {
+      cellDataMap[item['1']] = item;
+    });
 
-            // Save initial content from MainMenu in JSON
-            initialContent = cellDataMap["MainMenu"];
+    // Save initial content from MainMenu in JSON
+    initialContent = cellDataMap["MainMenu"];
 
-            for (let i = 1; i <= 10; i++) {
-              $('#cell-' + i).click(function(){
-                // If the first cell was clicked and we are in a submenu, restore the initial content
-                if (isBack && i === 1) {
-                  const cellData = initialContent;
-                  for (let j = 1; j <= 10; j++) {
-                    const cellContentElement = $('#cell-' + j + ' .cell-content');
-                    const cellDataItem = cellData[j + 1];
-                    if (cellDataItem) { // only update when cellDataItem is not null
-                      if (typeof cellDataItem === 'object' && cellDataItem.hasOwnProperty('text') && cellDataItem.hasOwnProperty('link')) {
-                        // Create new hyperlink element
-                        const link = $('<a>').addClass('no-underline').attr({
-                          'href': cellDataItem.link,
-                          'target': '_blank'
-                        }).text(cellDataItem.text);
-                        // Empty the cell and append the link
-                        cellContentElement.empty().append(link);
-                      } else if (cellDataItem === '/icones/arrow-left-solid.svg') {
-                        // Create new icon element
-                        const icon = $('<img>').attr('src', '/icones/arrow-left-solid.svg').addClass('arrow-left-icon');
-                        // Empty the cell and append the icon
-                        cellContentElement.empty().append(icon);
-                      } else {
-                        cellContentElement.text(cellDataItem);
-                      }
-                    }
-                  }
-                  isBack = false; // Reset the isBack state
-                } else if (!isBack) { // Only switch to submenu when not already in a submenu
-                  const cellData = cellDataMap['cell-' + i];
-                  for (let j = 1; j <= 10; j++) {
-                    // Clear all cells before updating
-                    $('#cell-' + j + ' .cell-content').empty();
-                  }
-                  for (let j = 1; j <= 10; j++) {
-                    const cellContentElement = $('#cell-' + j + ' .cell-content');
-                    const cellDataItem = cellData[j + 1];
-                    if (cellDataItem) { // only update when cellDataItem is not null
-                      if (typeof cellDataItem === 'object' && cellDataItem.hasOwnProperty('text') && cellDataItem.hasOwnProperty('link')) {
-                        // Create new hyperlink element
-                        const link = $('<a>').addClass('no-underline').attr({
-                          'href': cellDataItem.link,
-                          'target': '_blank'
-                        }).text(cellDataItem.text);
-                        // Empty the cell and append the link
-                        cellContentElement.empty().append(link);
-                      } else if (cellDataItem === '/icones/arrow-left-solid.svg') {
-                        // Create new icon element
-                        const icon = $('<img>').attr('src', '/icones/arrow-left-solid.svg').addClass('arrow-left-icon');
-                        // Empty the cell and append the icon
-                        cellContentElement.empty().append(icon);
-                      } else {
-                        cellContentElement.text(cellDataItem);
-                      }
-                    }
-                  }
-                  isBack = true; // Set the isBack state after displaying submenu
-                }
-              });
-            }
-          });
+    // AJAX request to get the titles data
+    $.getJSON("/data/title.json", function(data) {
+      // Iterate over properties of the first object in data
+      for (let key in data[0]) {
+        // key to match 'cell-' keys in cellDataMap
+        menuTitles['cell-' + key] = data[0][key];
+      };
+
+      for (let i = 1; i <= 10; i++) {
+        $('#cell-' + i).click(function(){
+          // If the first cell was clicked and we are in a submenu, restore the initial content
+          if (isBack && i === 1) {
+            updateCells(initialContent);
+            $('#dr-sanna-cell').text('Dr. Sanna');
+            isBack = false; // Reset the isBack state
+          } else if (!isBack) { // Only switch to submenu when not already in a submenu
+            const cellData = cellDataMap['cell-' + i];
+            updateCells(cellData);
+            // Update dr-sanna-cell text with corresponding title from menuTitles
+            $('#dr-sanna-cell').text(menuTitles['cell-' + i]);
+            isBack = true; // Set the isBack state after displaying submenu
+          }
         });
+      }
+    });
+  });
+
+  function updateCells(cellData) {
+    for (let j = 1; j <= 10; j++) {
+      // Clear all cells before updating
+      $('#cell-' + j + ' .cell-content').empty();
+    }
+    for (let j = 1; j <= 10; j++) {
+      const cellContentElement = $('#cell-' + j + ' .cell-content');
+      const cellDataItem = cellData[j + 1];
+      if (cellDataItem) { // only update when cellDataItem is not null
+        if (typeof cellDataItem === 'object' && cellDataItem.hasOwnProperty('text') && cellDataItem.hasOwnProperty('link')) {
+          // Create new hyperlink element
+          const link = $('<a>').addClass('no-underline').attr({
+            'href': cellDataItem.link,
+            'target': '_blank'
+          }).text(cellDataItem.text);
+          // Empty the cell and append the link
+          cellContentElement.empty().append(link);
+        } else if (cellDataItem === '/icones/arrow-left-solid.svg') {
+          // Create new icon element
+          const icon = $('<img>').attr('src', '/icones/arrow-left-solid.svg').addClass('arrow-left-icon');
+          // Empty the cell and append the icon
+          cellContentElement.empty().append(icon);
+        } else {
+          cellContentElement.text(cellDataItem);
+        }
+      }
+    }
+  }
+});
+            </script>
+     <script>
 $(window).on("load", function() {
     if ('fonts' in document) {
         Promise.all([
