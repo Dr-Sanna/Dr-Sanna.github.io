@@ -331,13 +331,5 @@ svg text::selection,svg tspan::selection{background-color: #4285f4;color: #fffff
     </g>
 </svg>
 </div>
-<script>
-document.querySelectorAll('.st8').forEach(function(element) {
-  element.addEventListener('click', function() {
-    var id = element.getAttribute('data-id');
-    window.parent.postMessage(id, '*');
-  });
-});
-</script>
   </body>
 </html>
