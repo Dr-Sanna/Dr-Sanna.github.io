@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Tableau Dynamique</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     table {
       border-collapse: collapse;
@@ -24,52 +23,26 @@
       text-align: center;
     }
   </style>
-  <script>
-    $(document).ready(function() {
-      // Récupérer la valeur du paramètre "texte" dans l'URL
-      var urlParams = new URLSearchParams(window.location.search);
-      var texteRecherche = urlParams.get('texte');
-
-      // Charger les données JSON depuis l'URL
-      $.ajax({
-        url: 'http://localhost:8000/MyArray.json',
-        dataType: 'json',
-        success: function(tableauJSON) {
-          // Rechercher les lignes correspondantes dans le tableau JSON
-          var lignes = tableauJSON.filter(function(item) {
-            return item["1"] === decodeURIComponent(texteRecherche);
-          });
-
-          // Modifier le nom de l'onglet avec la valeur de "Lésion buccale"
-          document.title = "Lésion buccale";
-
-          // Créer le tableau dynamique
-          var tableau = $("<table>").addClass("tableau-dynamique");
-          var entete = $("<tr>").appendTo(tableau);
-          $("<th>").text("Lésion buccale").addClass("lesion-buccale").appendTo(entete);
-          $("<th>").text("Définition").addClass("definition").appendTo(entete);
-          $("<th>").text("Étiologie").addClass("centrer").appendTo(entete);
-          $("<th>").text("Traitement").addClass("centrer").appendTo(entete);
-
-          lignes.forEach(function(ligne) {
-  var ligneTableau = $("<tr>");
-  $("<td>").text(ligne["1"]).addClass("lesion-buccale").appendTo(ligneTableau);
-  $("<td>").text(ligne["2"]).addClass("centrer").appendTo(ligneTableau);
-  $("<td>").text(ligne["3"]).addClass("definition").appendTo(ligneTableau);
-  $("<td>").text(ligne["4"]).addClass("centrer").appendTo(ligneTableau);
-  ligneTableau.appendTo(tableau);
-});
-
-
-          // Afficher le tableau dans le corps de la page
-          $("body").append(tableau);
-        },
-        error: function() {
-          console.log('Une erreur s\'est produite lors du chargement du fichier JSON.');
-        }
-      });
-    });
-  </script>
+<body>
+    <table id="myTable">
+        <tr>
+            <td>Lesion</td>
+            <td class="lesion-buccale"></td>
+        </tr>
+        <tr>
+            <td>Definition</td>
+            <td class="definition"></td>
+        </tr>
+        <tr>
+            <td>Etiologie</td>
+            <td class="centrer"></td>
+        </tr>
+        <tr>
+            <td>Traitement</td>
+            <td class="centrer"></td>
+        </tr>
+    </table>
+</body>
 </head>
 <body>
 </body>
