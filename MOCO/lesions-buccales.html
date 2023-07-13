@@ -80,12 +80,6 @@ window.addEventListener('message', function(event) {
   document.querySelector('.left .box:last-child iframe').src = url;
 });
 </script>
-<script>
-window.addEventListener('message', function(event) {
-  var id = event.data;
-  document.querySelector('.right iframe').contentWindow.postMessage(id, '*');
-});
-</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
