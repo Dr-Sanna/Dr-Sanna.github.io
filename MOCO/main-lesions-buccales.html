@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0016)http://localhost -->
 <html>
   <head>
     <meta charset="utf-8"/>
@@ -139,6 +138,13 @@ g[ed\:togtopicid],g[ed\:hyperlink],g[ed\:comment],g[ed\:note] {cursor:pointer;}
 g[id] {-moz-user-select: none;-ms-user-select: none;user-select: none;}
 svg text::selection,svg tspan::selection{background-color: #4285f4;color: #ffffff;fill: #ffffff;}
 .st2 {fill:#000000;font-family:Arial Black;font-size:16pt;font-weight:bold}
+.st2:hover {
+    cursor: pointer;
+  outline: 5px solid white;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 .st3 {fill:#000000;font-family:Arial;font-size:14pt;font-weight:bold}
 .st4 {fill:#ebebeb;font-family:Arial;font-size:10pt;font-weight:bold}
 .st5 {fill:#ebebeb;font-family:Arial;font-size:10pt}
@@ -159,7 +165,7 @@ svg text::selection,svg tspan::selection{background-color: #4285f4;color: #fffff
     </g>
     <g ed:parentid="101" ed:layout="lefttree" ed:width="332.518" ed:height="46.3813" id="102" transform="matrix(1,0,0,1,117.62,153.06)">
         <path fill="#f5c759" d="M0,0L332.5,0L332.5,46.4L0,46.4L0,0z"/>
-        <text class="st2">
+        <text class="st2" data-url="lesions-blanches.html">
             <tspan y="31.7" style="white-space:pre" x="19">LES LESIONS BLANCHES</tspan>
         </text>
     </g>
@@ -171,7 +177,7 @@ svg text::selection,svg tspan::selection{background-color: #4285f4;color: #fffff
     </g>
     <g ed:parentid="101" ed:layout="lefttree" ed:width="427.137" ed:height="46.3813" id="104" transform="matrix(1,0,0,1,23,232.44)">
         <path fill="#ff7869" d="M0,0L427.1,0L427.1,46.4L0,46.4L0,0z"/>
-        <text class="st2">
+        <text class="st2" data-url="lesions-erythemateuses.html">
             <tspan y="31.7" style="white-space:pre" x="19">LES LESIONS ERYTHEMATEUSES</tspan>
         </text>
     </g>
@@ -698,9 +704,9 @@ svg text::selection,svg tspan::selection{background-color: #4285f4;color: #fffff
     </g>
     <g ed:parentid="101" ed:layout="lefttree" ed:width="357.381" ed:height="46.3813" id="627" transform="matrix(1,0,0,1,92.76,311.82)">
         <path fill="#c6b6f2" d="M0,0L357.4,0L357.4,46.4L0,46.4L0,0z"/>
-        <text class="st2">
-            <tspan y="31.7" style="white-space:pre" x="19">LES LESIONS PIGMENTEES</tspan>
-        </text>
+<text class="st2" data-url="lesions-pigmentees.html">
+  <tspan y="31.7" style="white-space:pre" x="19">LES LESIONS PIGMENTEES</tspan>
+</text>
     </g>
     <g ed:parentid="146" style="display:none" ed:layout="tree" ed:width="99.036" ed:height="21.8777" id="656" transform="matrix(1,0,0,1,617.8,741.53)">
         <text class="st5">
@@ -1036,5 +1042,13 @@ svg text::selection,svg tspan::selection{background-color: #4285f4;color: #fffff
 </svg>
 </div>
     </div>
+<script>
+document.querySelectorAll('.st2').forEach(function(element) {
+  element.addEventListener('click', function() {
+    var url = element.getAttribute('data-url');
+    window.parent.postMessage(url, '*');
+  });
+});
+</script>
   </body>
 </html>
