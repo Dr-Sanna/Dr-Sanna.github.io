@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
     <style>
         *, *:before, *:after {
             box-sizing: border-box;
@@ -12,7 +13,7 @@
             overflow: hidden;
             margin: 0;
             padding: 0;
-            background-color: #808080; /* Fond midgray */
+            background-color: dimgray;
         }
         
         .container {
@@ -66,12 +67,33 @@
                 <iframe src="/MOCO/main-lesions-buccales.html"></iframe>
             </div>
             <div class="box">
-                <iframe src="/MOCO/lesions-blanches.html"></iframe>
+    <iframe src="default.html"></iframe>
             </div>
         </div>
         <div class="right">
             <iframe src="/MOCO/tableau.html"></iframe>
         </div>
     </div>
+<script>
+window.addEventListener('message', function(event) {
+  var url = event.data;
+  document.querySelector('.left .box:last-child iframe').src = url;
+});
+</script>
+<script>
+window.addEventListener('message', function(event) {
+  var id = event.data;
+  document.querySelector('.right iframe').contentWindow.postMessage(id, '*');
+});
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $.getJSON("/data/MyArray.json", function(data) {
+        // Traitement des données JSON ici
+        console.log(data); // Exemple : affichage des données dans la console
+      });
+    });
+  </script>
 </body>
 </html>
