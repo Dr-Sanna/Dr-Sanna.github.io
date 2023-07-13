@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<!-- saved from url=(0016)http://localhost -->
 <html>
   <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>Les principales affections buccales</title>
+    <title>Les lésions blanches</title>
     <style>
 body, html {
   height: 100%;
@@ -241,7 +240,7 @@ svg text::selection,svg tspan::selection{background-color: #4285f4;color: #fffff
         </text>
     </g>
     <g ed:parentid="146" ed:layout="righttree" ed:width="415.3525179856115" ed:height="24.64028776978417" id="149" transform="matrix(1,0,0,1,262,196.85)">
-        <text class="st8">
+        <text class="st8" data-id="langue-geographique">
             <tspan y="19" style="white-space:pre" x="10">La glossite exfoliatrice marginée ou langue géographique</tspan>
         </text>
     </g>
@@ -332,5 +331,13 @@ svg text::selection,svg tspan::selection{background-color: #4285f4;color: #fffff
     </g>
 </svg>
 </div>
+<script>
+document.querySelectorAll('.st8').forEach(function(element) {
+  element.addEventListener('click', function() {
+    var id = element.getAttribute('data-id');
+    window.parent.postMessage(id, '*');
+  });
+});
+</script>
   </body>
 </html>
