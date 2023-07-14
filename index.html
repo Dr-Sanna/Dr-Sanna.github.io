@@ -4,7 +4,7 @@
     <title>Dr Sanna</title>
     <link rel="preload" href="/icones/arrow-left-solid.svg" as="image">
     <style>
-       #loader {
+  #loader {
   transition: all 0.3s ease-out;
   opacity: 1;
   visibility: visible;
@@ -23,129 +23,135 @@
   visibility: hidden;
 }
 
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            background-color: dimgray;
-        }
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}
 
-        #title-container {
-            width: 33.33%;
-            max-height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background-color: dimgray;
-            color: white;
-        }
+#title-container {
+  width: 33.33%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: white;
+}
 
-        #table-container {
-            width: 66.67%;
-            max-height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            padding: 20px;
-            background-color: dimgray;
-        }
+#table-container {
+  width: 66.67%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 20px;
+}
 
-        table {
-            border-spacing: 15px;
-            border-collapse: separate;
-            width: 100%;
-            height: 100%;
-        }
+table {
+  border-spacing: 20px;
+  border-collapse: separate;
+  width: 100%;
+  height: 100%;
+}
 
-        td {
-            border-radius: 10px;
-            transition: background-color 0.3s;
-            border: 2px solid black;
-            background-color: white;
-            box-sizing: border-box;
-            overflow: hidden;
-            padding: 0;
-            position: relative;
-        }
+td {
+  border-radius: 10px;
+  transition: background-color 0.3s;
+  border: 3px solid black;
+  background-color: seashell;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  z-index: 0;
+}
 
-        .cell-content {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            word-wrap: break-word;
-            font-weight: bold;
-            color: black;
-        }
+.cell-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  word-wrap: break-word;
+  font-weight: bold;
+  color: black;
+  transition: none;
+}
 
-        .square-cell {
-            width: calc(100% - 20px);
-            height: calc(100% - 20px);
-            padding: 10px;
-            position: relative;
-        }
+.square-cell {
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  padding: 10px;
+  position: relative;
+}
 
-        .square-cell .cell-content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
+.square-cell .cell-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 
-        #table-container td:hover {
-            background-color: seashell;
-            cursor: pointer;
-            outline: 3px solid black;
-              transform: scale(1.05);
-transition: background-color 0.3s, transform 0.3s;
-        }
+#title-container tr:first-child .cell-content {
+  font-size: 1.2em;
+  text-transform: uppercase;
+  font-family: "Arial Black", Arial, sans-serif;
+}
 
-        #title-container tr:first-child .cell-content {
-            font-size: 1.2em;
-            text-transform: uppercase;
-            font-family: "Arial Black", Arial, sans-serif;
-        }
+#table-container tr .cell-content {
+  font-size: 15px;
+  text-transform: none;
+  font-family: Arial, sans-serif;
+}
 
-        #table-container tr .cell-content {
-            font-size: 0.8em;
-            text-transform: none;
-            font-family: Arial, sans-serif;
-        }
+#title-container td {
+  border: 3px solid black;
+  background-color: seashell;
+  color: white;
+}
 
-        .cell-content a {
-            text-decoration: none;
-            color: inherit;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+#table-container td:not(#title-container td):hover {
+  background-color: seashell;
+  outline: 3px solid indianred;
+  z-index: 1;
+  transform: scale(1.1);
+}
 
-        .cell-content a:hover {
-            background-color: transparent;
-        }
-        .arrow-left-icon {
-              width: 8em; /* Ajustez la largeur de l'image selon vos besoins */
+.cell-content a {
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell-content a:hover {
+  background-color: transparent;
+}
+
+.arrow-left-icon {
+  width: 8em;
   height: 8em; 
-        }
-    </style>
+}
+</style>
 </head>
 <body>
         <div id="loader">
