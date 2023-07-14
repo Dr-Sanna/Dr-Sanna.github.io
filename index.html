@@ -60,7 +60,7 @@
         }
 
         table {
-            border-spacing: 10px;
+            border-spacing: 15px;
             border-collapse: separate;
             width: 100%;
             height: 100%;
@@ -109,9 +109,11 @@
         }
 
         #table-container td:hover {
-            background-color: lightblue;
+            background-color: seashell;
             cursor: pointer;
             outline: 3px solid black;
+              transform: scale(1.05);
+transition: background-color 0.3s, transform 0.3s;
         }
 
         #title-container tr:first-child .cell-content {
