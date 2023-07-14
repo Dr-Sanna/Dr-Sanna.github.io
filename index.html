@@ -3,7 +3,7 @@
 <head>
     <title>Dr Sanna</title>
     <link rel="preload" href="/icones/arrow-left-solid.svg" as="image">
-    <style>
+       <style>
   #loader {
   transition: all 0.3s ease-out;
   opacity: 1;
@@ -33,7 +33,8 @@ html, body {
 body {
   font-family: Arial, sans-serif;
   display: flex;
-  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898;
+ background-blend-mode: multiply,multiply;
 }
 
 #title-container {
@@ -54,18 +55,16 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 20px;
+  padding: 100px;
 }
 
 table {
-  border-spacing: 20px;
   border-collapse: separate;
   width: 100%;
   height: 100%;
 }
 
 td {
-  border-radius: 10px;
   transition: background-color 0.3s;
   border: 3px solid black;
   background-color: seashell;
@@ -128,11 +127,12 @@ td {
 
 #table-container td:not(#title-container td):hover {
     cursor: pointer;
+border-radius: 20px;
   background-color: seashell;
     border: 2px solid black;
-  outline: 3px solid indianred;
+  outline: 5px solid indianred;
   z-index: 1;
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
 .cell-content a {
