@@ -27,19 +27,25 @@
         "1": "cell-1",
         "2": "/icones/arrow-left-solid.svg",
         "3": {
-            "text": "ANATOMIE GENERALE",
+            "text": "ANATOMIE TETE ET COU",
             "link": "anatomie-generale.html"
         },
         "4": {
-            "text": "ANATOMIE DENTAIRE",
+            "text": "ATLAS D'ANATOMIE DENTAIRE",
             "link": "anatomie-dentaire.html"
         },
         "5": {
-            "text": "Vues 3D",
-            "link": "vues-3D.html"
+            "text": "BIOMATERIAUX ET PRODUITS",
+            "link": ""
         },
-        "6": "-",
-        "7": "-",
+        "6": {
+            "text": "HISTOLOGIE",
+            "link": ""
+        },
+        "7": {
+            "text": "PHYSIOLOGIE CLINIQUE ORO-FACIALE",
+            "link": ""
+        },
         "8": "-",
         "9": "-",
         "10": "-"
