@@ -160,6 +160,9 @@ td {
   width: 8em;
   height: 8em; 
 }
+ .hidden {
+  display: none;
+}              
 </style>
 </head>
 <body>
@@ -198,80 +201,78 @@ td {
         </table>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-  let initialContent = {}; // Object to store initial content
-  let isBack = false; // State to track if back button was clicked
-  let menuTitles = {}; // Object to store menu titles
-  let initialTitle = $('#dr-sanna-cell').text(); // Store the initial title
-
-  // AJAX request to get the menu data
-  $.getJSON("/data/MainMenu.json", function(data) {
-    const cellDataMap = {};
-    data.forEach(item => {
-      cellDataMap[item['1']] = item;
-    });
-
-    // Save initial content from MainMenu in JSON
-    initialContent = cellDataMap["MainMenu"];
-
-    // AJAX request to get the titles data
-    $.getJSON("/data/title.json", function(data) {
-      // Iterate over properties of the first object in data
-      for (let key in data[0]) {
-        // key to match 'cell-' keys in cellDataMap
-        menuTitles['cell-' + key] = data[0][key];
-      };
-
-      for (let i = 1; i <= 10; i++) {
-        $('#cell-' + i).click(function(){
-          // If the first cell was clicked and we are in a submenu, restore the initial content
-          if (isBack && i === 1) {
-            updateCells(initialContent);
-            $('#dr-sanna-cell').text(initialTitle); // Use the initial title here
-            isBack = false; // Reset the isBack state
-          } else if (!isBack) { // Only switch to submenu when not already in a submenu
-            const cellData = cellDataMap['cell-' + i];
-            updateCells(cellData);
-            // Update dr-sanna-cell text with corresponding title from menuTitles
-            $('#dr-sanna-cell').text(menuTitles['cell-' + i]);
-            isBack = true; // Set the isBack state after displaying submenu
-          }
+    <script>
+      $(document).ready(function(){
+        let initialContent = {};
+        let isBack = false;
+        let menuTitles = {};
+        let initialTitle = $('#dr-sanna-cell').text();
+      
+        $.getJSON("/data/MainMenu.json", function(data) {
+          const cellDataMap = {};
+          data.forEach(item => {
+            cellDataMap[item['1']] = item;
+          });
+      
+          initialContent = cellDataMap["MainMenu"];
+      
+          $.getJSON("/data/title.json", function(data) {
+            for (let key in data[0]) {
+              menuTitles['cell-' + key] = data[0][key];
+            };
+      
+            for (let i = 1; i <= 10; i++) {
+              $('#cell-' + i).click(function(){
+                if (isBack && i === 1) {
+                  updateCells(initialContent);
+                  $('#dr-sanna-cell').text(initialTitle);
+                  isBack = false;
+                } else if (!isBack) {
+                  const cellData = cellDataMap['cell-' + i];
+                  updateCells(cellData);
+                  $('#dr-sanna-cell').text(menuTitles['cell-' + i]);
+                  isBack = true;
+                }
+              });
+            }
+          });
         });
-      }
-    });
-  });
-
-  function updateCells(cellData) {
-    for (let j = 1; j <= 10; j++) {
-      // Clear all cells before updating
-      $('#cell-' + j + ' .cell-content').empty();
-    }
-    for (let j = 1; j <= 10; j++) {
-      const cellContentElement = $('#cell-' + j + ' .cell-content');
-      const cellDataItem = cellData[j + 1];
-      if (cellDataItem) { // only update when cellDataItem is not null
-        if (typeof cellDataItem === 'object' && cellDataItem.hasOwnProperty('text') && cellDataItem.hasOwnProperty('link')) {
-          // Create new hyperlink element
-          const link = $('<a>').addClass('no-underline').attr({
-            'href': cellDataItem.link,
-            'target': '_blank'
-          }).text(cellDataItem.text);
-          // Empty the cell and append the link
-          cellContentElement.empty().append(link);
-        } else if (cellDataItem === '/icones/arrow-left-solid.svg') {
-          // Create new icon element
-          const icon = $('<img>').attr('src', '/icones/arrow-left-solid.svg').addClass('arrow-left-icon');
-          // Empty the cell and append the icon
-          cellContentElement.empty().append(icon);
-        } else {
-          cellContentElement.text(cellDataItem);
+      
+        function updateCells(cellData) {
+          for (let j = 1; j <= 10; j++) {
+            $('#cell-' + j + ' .cell-content').empty();
+            $('#cell-' + j).css('visibility', 'visible');
+          }
+          for (let j = 1; j <= 10; j++) {
+            const cellContentElement = $('#cell-' + j + ' .cell-content');
+            const cellDataItem = cellData[j + 1];
+            if (cellDataItem) {
+              if (typeof cellDataItem === 'object' && cellDataItem.hasOwnProperty('text') && cellDataItem.hasOwnProperty('link')) {
+                const link = $('<a>').addClass('no-underline').attr({
+                  'href': cellDataItem.link,
+                  'target': '_blank'
+                }).text(cellDataItem.text);
+                cellContentElement.empty().append(link);
+              } else if (cellDataItem === '/icones/arrow-left-solid.svg') {
+                const icon = $('<img>').attr('src', '/icones/arrow-left-solid.svg').addClass('arrow-left-icon');
+                cellContentElement.empty().append(icon);
+              } else {
+                cellContentElement.text(cellDataItem);
+              }
+            } else {
+              $('#cell-' + j).css('visibility', 'hidden');
+            }
+          }
         }
-      }
-    }
-  }
-});
-</script>
+      });
+      
+      $(document).on("mouseover", ".square-cell", function() {
+        if ($(this).css('visibility') == 'hidden') {
+          $(this).css('cursor', 'default');
+          $(this).css('transform', 'none');
+        }
+      });
+      </script>
 
      <script>
 $(window).on("load", function() {
