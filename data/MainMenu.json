@@ -1,26 +1,14 @@
 [
     {
-        "1": "ID",
-        "2": 1,
-        "3": 2,
-        "4": 3,
-        "5": 4,
-        "6": 5,
-        "7": 6,
-        "8": 7,
-        "9": 8,
-        "10": 9
-    },
-    {
         "1": "MainMenu",
         "2": "SCIENCES FONDAMENTALES",
-        "3": "BIOMATERIAUX",
-        "4": "MOCO",
-        "5": "OCE",
-        "6": "PARO/IMPLANTO",
+        "3": "MOCO",
+        "4": "PARO/IMPLANTO",
+        "5": "OC",
+        "6": "ENDODONTIE",
         "7": "PROTHESES",
         "8": "PEDO/ODF",
-        "9": "OCCLUSO",
+        "9": "ODONTOLOGIE SPECIFIQUE",
         "10": "Ressources utiles"
     },
     {
@@ -53,18 +41,6 @@
     {
         "1": "cell-2",
         "2": "/icones/arrow-left-solid.svg",
-        "3": "-",
-        "4": "-",
-        "5": "-",
-        "6": "-",
-        "7": "-",
-        "8": "-",
-        "9": "-",
-        "10": "-"
-    },
-    {
-        "1": "cell-3",
-        "2": "/icones/arrow-left-solid.svg",
         "3": {
             "text": "ATLAS DES LESIONS BUCCALES",
             "link": "/MOCO/lesions-buccales.html"
@@ -73,6 +49,18 @@
             "text": "RISQUES MEDICAUX",
             "link": "/MOCO/risques-medicaux.html"
         },
+        "5": "-",
+        "6": "-",
+        "7": "-",
+        "8": "-",
+        "9": "-",
+        "10": "-"
+    },
+        {
+        "1": "cell-3",
+        "2": "/icones/arrow-left-solid.svg",
+        "3": "-",
+        "4": "-",
         "5": "-",
         "6": "-",
         "7": "-",
@@ -140,9 +128,9 @@
     {
         "1": "cell-8",
         "2": "/icones/arrow-left-solid.svg",
-        "3": "-",
-        "4": "-",
-        "5": "-",
+        "3": "OCCLUSODONTIE",
+        "4": "ODONTOLOGIE DU SPORT",
+        "5": "ODONTOLOGIE MEDICO-LEGALE",
         "6": "-",
         "7": "-",
         "8": "-",
