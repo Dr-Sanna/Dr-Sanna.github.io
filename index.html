@@ -225,6 +225,11 @@ $(document).ready(function(){
   let isBack = false;
   let initialTitle = $('#dr-sanna-cell').text();
 
+  // Dossier contenant les images à précharger
+  const imageFolder = '/icones/';
+  // Tableau pour stocker les noms des images à précharger
+  const imageFileNames = [];
+
   $.getJSON("/data/MainMenu.json", function(data) {
     const cellDataMap = {};
     data.forEach(item => {
@@ -272,28 +277,68 @@ $(document).ready(function(){
           const icon = $('<img>').attr('src', '/icones/arrow-left-solid.svg').addClass('arrow-left-icon');
           cellContentElement.empty().append(icon);
         } else {
-          const imageSrc = '/icones/' + cellDataItem.toLowerCase().replace(/\s/g, '-').replace('/', '-').toLowerCase() + '.png';
-          const image = new Image();
-          image.src = imageSrc;
-          image.onload = function() {
-            const imgElement = $('<img>').addClass('content-image').attr('src', imageSrc);
-            const text = $('<span>').addClass('content-text').text(cellDataItem);
-            const content = $('<div>').addClass('content-container').append(imgElement).append(text);
-            cellContentElement.empty().append(content);
-          };
+          const imageSrc = imageFolder + cellDataItem.toLowerCase().replace(/\s/g, '-').replace('/', '-').toLowerCase() + '.png';
+          const image = $('<img>').addClass('content-image').attr('src', imageSrc);
+          const text = $('<span>').addClass('content-text').text(cellDataItem);
+          const content = $('<div>').addClass('content-container').append(image).append(text);
+          cellContentElement.empty().append(content);
         }
       } else {
         $('#cell-' + j).css('visibility', 'hidden');
       }
     }
   }
+
+  // Fonction pour précharger les images
+  function preloadImages(imageUrls, callback) {
+    const totalCount = imageUrls.length;
+    let loadedCount = 0;
+
+    // Fonction de rappel lorsqu'une image est chargée
+    function imageLoaded() {
+      loadedCount++;
+      if (loadedCount === totalCount) {
+        callback();
+      }
+    }
+
+    // Préchargement de chaque image
+    imageUrls.forEach(function(imageUrl) {
+      const image = new Image();
+      image.onload = imageLoaded;
+      image.onerror = imageLoaded; // Gère les erreurs de chargement des images
+      image.src = imageUrl;
+    });
+  }
+
+  // Fonction pour obtenir les URL des images à précharger
+  function getImageUrls() {
+    const imageUrls = [];
+    $('img.content-image').each(function() {
+      const imageUrl = $(this).attr('src');
+      imageUrls.push(imageUrl);
+    });
+    return imageUrls;
+  }
+
+  // Obtenir les noms de fichier des images dans le dossier
+  $.ajax({
+    url: imageFolder,
+    success: function(data) {
+      $(data).find('a:contains(".png")').each(function() {
+        const fileName = $(this).attr("href");
+        imageFileNames.push(imageFolder + fileName);
+      });
+
+      // Précharger les images
+      preloadImages(imageFileNames, function() {
+        // Toutes les images sont chargées, masquer le loader
+        $("#loader").fadeOut("slow");
+      });
+    }
+  });
 });
-
-
 </script>
-      
-      
-
      <script>
 $(window).on("load", function() {
     if ('fonts' in document) {
