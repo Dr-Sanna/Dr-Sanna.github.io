@@ -34,9 +34,9 @@
             "text": "PHYSIOLOGIE CLINIQUE ORO-FACIALE",
             "link": ""
         },
-        "8": "-",
-        "9": "-",
-        "10": "-"
+        "8": "HEMATOLOGIE",
+        "9": "IMMUNOLOGIE",
+        "10": "RADIOLOGIE"
     },
     {
         "1": "cell-2",
@@ -140,7 +140,7 @@
     {
         "1": "cell-9",
         "2": "/icones/arrow-left-solid.svg",
-        "3": "-",
+        "3": "Administratif",
         "4": "-",
         "5": "-",
         "6": "-",
