@@ -160,9 +160,27 @@ td {
   width: 8em;
   height: 8em; 
 }
- .hidden {
+.hidden {
   display: none;
-}              
+}
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.content-image {
+  max-height: 70%;
+  max-width: 100%;
+}
+
+.content-text {
+  text-align: center;
+  margin-top: 10px;
+}
+
 </style>
 </head>
 <body>
@@ -184,92 +202,97 @@ td {
     <div id="table-container">
         <table>
             <tr>
-                <td class="square-cell" id="cell-1"><div class="cell-content"><span class="content-text">SCIENCES FONDAMENTALES</span></div></td>
-                <td class="square-cell" id="cell-2"><div class="cell-content"><span class="content-text">MOCO</span></div></td>
-                <td class="square-cell" id="cell-3"><div class="cell-content"><span class="content-text">PARO/IMPLANTO</span></div></td>
+                <td class="square-cell" id="cell-1"><div class="cell-content"></div></td>
+                <td class="square-cell" id="cell-2"><div class="cell-content"></div></td>
+                <td class="square-cell" id="cell-3"><div class="cell-content"></div></td>
             </tr>
             <tr>
-                <td class="square-cell" id="cell-4"><div class="cell-content">OC</div></td>
-                <td class="square-cell" id="cell-5"><div class="cell-content">ENDODONTIE</div></td>
-                <td class="square-cell" id="cell-6"><div class="cell-content">PROTHESES</div></td>
+                <td class="square-cell" id="cell-4"><div class="cell-content"></div></td>
+                <td class="square-cell" id="cell-5"><div class="cell-content"></div></td>
+                <td class="square-cell" id="cell-6"><div class="cell-content"></div></td>
             </tr>
             <tr>
-                <td class="square-cell" id="cell-7"><div class="cell-content">PEDO</div></td>
-                <td class="square-cell" id="cell-8"><div class="cell-content">ODONTOLOGIE SPECIFIQUE</div></td>
-                <td class="square-cell" id="cell-9"><div class="cell-content">Ressources utiles</div></td>
+                <td class="square-cell" id="cell-7"><div class="cell-content"></div></td>
+                <td class="square-cell" id="cell-8"><div class="cell-content"></div></td>
+                <td class="square-cell" id="cell-9"><div class="cell-content"></div></td>
             </tr>
         </table>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
 $(document).ready(function(){
-    let initialContent = {};
-    let isBack = false;
-    let initialTitle = $('#dr-sanna-cell').text();
+  let initialContent = {};
+  let isBack = false;
+  let initialTitle = $('#dr-sanna-cell').text();
 
-    $.getJSON("/data/MainMenu.json", function(data) {
-        const cellDataMap = {};
-        data.forEach(item => {
-            cellDataMap[item['1']] = item;
-        });
-
-        initialContent = cellDataMap["MainMenu"];
-        updateCells(initialContent); 
-
-        for (let i = 1; i <= 9; i++) {
-            $('#cell-' + i).click(function(){
-                if (isBack && i === 1) {
-                    updateCells(initialContent);
-                    $('#dr-sanna-cell').text(initialTitle);
-                    isBack = false;
-                } else if (!isBack) {
-                    const cellData = cellDataMap['cell-' + i];
-                    const index = i + 1;
-                    const cellDataItem = cellDataMap["MainMenu"][index.toString()];
-                    
-                    updateCells(cellData);
-                    $('#dr-sanna-cell').text(cellDataItem);
-                    isBack = true;
-                }
-            });
-        }
+  $.getJSON("/data/MainMenu.json", function(data) {
+    const cellDataMap = {};
+    data.forEach(item => {
+      cellDataMap[item['1']] = item;
     });
 
-    function updateCells(cellData) {
-        for (let j = 1; j <= 9; j++) {
-            $('#cell-' + j + ' .cell-content').empty();
-            $('#cell-' + j).css('visibility', 'visible');
+    initialContent = cellDataMap["MainMenu"];
+    updateCells(initialContent); 
+
+    for (let i = 1; i <= 9; i++) {
+      $('#cell-' + i).click(function(){
+        if (isBack && i === 1) {
+          updateCells(initialContent);
+          $('#dr-sanna-cell').text(initialTitle);
+          isBack = false;
+        } else if (!isBack) {
+          const cellData = cellDataMap['cell-' + i];
+          const index = i + 1;
+          const cellDataItem = cellDataMap["MainMenu"][index.toString()];
+
+          updateCells(cellData);
+          $('#dr-sanna-cell').text(cellDataItem);
+          isBack = true;
         }
-        for (let j = 1; j <= 9; j++) {
-            const cellContentElement = $('#cell-' + j + ' .cell-content');
-            const cellDataItem = cellData[j + 1];
-            if (cellDataItem) {
-                if (typeof cellDataItem === 'object' && cellDataItem.hasOwnProperty('text') && cellDataItem.hasOwnProperty('link')) {
-                    const link = $('<a>').addClass('no-underline').attr({
-                        'href': cellDataItem.link,
-                        'target': '_blank'
-                    }).text(cellDataItem.text);
-                    cellContentElement.empty().append(link);
-                } else if (cellDataItem === '/icones/arrow-left-solid.svg') {
-                    const icon = $('<img>').attr('src', '/icones/arrow-left-solid.svg').addClass('arrow-left-icon');
-                    cellContentElement.empty().append(icon);
-                } else {
-                    cellContentElement.text(cellDataItem);
-                }
-            } else {
-                $('#cell-' + j).css('visibility', 'hidden');
-            }
-        }
+      });
     }
+  });
+
+  function updateCells(cellData) {
+    for (let j = 1; j <= 9; j++) {
+      $('#cell-' + j + ' .cell-content').empty();
+      $('#cell-' + j).css('visibility', 'visible');
+    }
+    for (let j = 1; j <= 9; j++) {
+      const cellContentElement = $('#cell-' + j + ' .cell-content');
+      const cellDataItem = cellData[j + 1];
+      if (cellDataItem) {
+        if (typeof cellDataItem === 'object' && cellDataItem.hasOwnProperty('text') && cellDataItem.hasOwnProperty('link')) {
+          const link = $('<a>').addClass('no-underline').attr({
+            'href': cellDataItem.link,
+            'target': '_blank'
+          }).text(cellDataItem.text);
+          cellContentElement.empty().append(link);
+        } else if (cellDataItem === '/icones/arrow-left-solid.svg') {
+          const icon = $('<img>').attr('src', '/icones/arrow-left-solid.svg').addClass('arrow-left-icon');
+          cellContentElement.empty().append(icon);
+        } else {
+          const imageSrc = '/icones/' + cellDataItem.toLowerCase().replace(/\s/g, '-').replace('/', '-').toLowerCase() + '.png';
+          const image = new Image();
+          image.src = imageSrc;
+          image.onload = function() {
+            const imgElement = $('<img>').addClass('content-image').attr('src', imageSrc);
+            const text = $('<span>').addClass('content-text').text(cellDataItem);
+            const content = $('<div>').addClass('content-container').append(imgElement).append(text);
+            cellContentElement.empty().append(content);
+          };
+        }
+      } else {
+        $('#cell-' + j).css('visibility', 'hidden');
+      }
+    }
+  }
 });
 
-$(document).on("mouseover", ".square-cell", function() {
-    if ($(this).css('visibility') == 'hidden') {
-        $(this).css('cursor', 'default');
-        $(this).css('transform', 'none');
-    }
-});
+
 </script>
+      
+      
 
      <script>
 $(window).on("load", function() {
@@ -287,3 +310,4 @@ $(window).on("load", function() {
     </script>
 </body>
 </html>
+
