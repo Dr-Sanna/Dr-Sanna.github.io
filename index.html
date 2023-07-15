@@ -202,77 +202,74 @@ td {
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-      $(document).ready(function(){
-        let initialContent = {};
-        let isBack = false;
-        let menuTitles = {};
-        let initialTitle = $('#dr-sanna-cell').text();
-      
-        $.getJSON("/data/MainMenu.json", function(data) {
-          const cellDataMap = {};
-          data.forEach(item => {
+$(document).ready(function(){
+    let initialContent = {};
+    let isBack = false;
+    let initialTitle = $('#dr-sanna-cell').text();
+
+    $.getJSON("/data/MainMenu.json", function(data) {
+        const cellDataMap = {};
+        data.forEach(item => {
             cellDataMap[item['1']] = item;
-          });
-      
-          initialContent = cellDataMap["MainMenu"];
-      
-          $.getJSON("/data/title.json", function(data) {
-            for (let key in data[0]) {
-              menuTitles['cell-' + key] = data[0][key];
-            };
-      
-            for (let i = 1; i <= 10; i++) {
-              $('#cell-' + i).click(function(){
-                if (isBack && i === 1) {
-                  updateCells(initialContent);
-                  $('#dr-sanna-cell').text(initialTitle);
-                  isBack = false;
-                } else if (!isBack) {
-                  const cellData = cellDataMap['cell-' + i];
-                  updateCells(cellData);
-                  $('#dr-sanna-cell').text(menuTitles['cell-' + i]);
-                  isBack = true;
-                }
-              });
-            }
-          });
         });
-      
-        function updateCells(cellData) {
-          for (let j = 1; j <= 10; j++) {
+
+        initialContent = cellDataMap["MainMenu"];
+        updateCells(initialContent); 
+
+        for (let i = 1; i <= 9; i++) {
+            $('#cell-' + i).click(function(){
+                if (isBack && i === 1) {
+                    updateCells(initialContent);
+                    $('#dr-sanna-cell').text(initialTitle);
+                    isBack = false;
+                } else if (!isBack) {
+                    const cellData = cellDataMap['cell-' + i];
+                    const index = i + 1;
+                    const cellDataItem = cellDataMap["MainMenu"][index.toString()];
+                    
+                    updateCells(cellData);
+                    $('#dr-sanna-cell').text(cellDataItem);
+                    isBack = true;
+                }
+            });
+        }
+    });
+
+    function updateCells(cellData) {
+        for (let j = 1; j <= 9; j++) {
             $('#cell-' + j + ' .cell-content').empty();
             $('#cell-' + j).css('visibility', 'visible');
-          }
-          for (let j = 1; j <= 10; j++) {
+        }
+        for (let j = 1; j <= 9; j++) {
             const cellContentElement = $('#cell-' + j + ' .cell-content');
             const cellDataItem = cellData[j + 1];
             if (cellDataItem) {
-              if (typeof cellDataItem === 'object' && cellDataItem.hasOwnProperty('text') && cellDataItem.hasOwnProperty('link')) {
-                const link = $('<a>').addClass('no-underline').attr({
-                  'href': cellDataItem.link,
-                  'target': '_blank'
-                }).text(cellDataItem.text);
-                cellContentElement.empty().append(link);
-              } else if (cellDataItem === '/icones/arrow-left-solid.svg') {
-                const icon = $('<img>').attr('src', '/icones/arrow-left-solid.svg').addClass('arrow-left-icon');
-                cellContentElement.empty().append(icon);
-              } else {
-                cellContentElement.text(cellDataItem);
-              }
+                if (typeof cellDataItem === 'object' && cellDataItem.hasOwnProperty('text') && cellDataItem.hasOwnProperty('link')) {
+                    const link = $('<a>').addClass('no-underline').attr({
+                        'href': cellDataItem.link,
+                        'target': '_blank'
+                    }).text(cellDataItem.text);
+                    cellContentElement.empty().append(link);
+                } else if (cellDataItem === '/icones/arrow-left-solid.svg') {
+                    const icon = $('<img>').attr('src', '/icones/arrow-left-solid.svg').addClass('arrow-left-icon');
+                    cellContentElement.empty().append(icon);
+                } else {
+                    cellContentElement.text(cellDataItem);
+                }
             } else {
-              $('#cell-' + j).css('visibility', 'hidden');
+                $('#cell-' + j).css('visibility', 'hidden');
             }
-          }
         }
-      });
-      
-      $(document).on("mouseover", ".square-cell", function() {
-        if ($(this).css('visibility') == 'hidden') {
-          $(this).css('cursor', 'default');
-          $(this).css('transform', 'none');
-        }
-      });
-      </script>
+    }
+});
+
+$(document).on("mouseover", ".square-cell", function() {
+    if ($(this).css('visibility') == 'hidden') {
+        $(this).css('cursor', 'default');
+        $(this).css('transform', 'none');
+    }
+});
+</script>
 
      <script>
 $(window).on("load", function() {
