@@ -309,18 +309,23 @@ $(document).ready(function () {
           cellDataItem.hasOwnProperty("text") &&
           cellDataItem.hasOwnProperty("image")
         ) {
-          const imageSrc = cellDataItem.image;
-          const image = $("<img>")
-            .addClass("content-image")
-            .attr("src", imageSrc);
-          const text = $("<span>")
-            .addClass("content-text")
-            .text(cellDataItem.text);
-          const content = $("<div>")
-            .addClass("content-container")
-            .append(image)
-            .append(text);
-          cellContentElement.empty().append(content);
+          // Check if text is not null
+          if (cellDataItem.text) {
+            const imageSrc = cellDataItem.image;
+            const image = $("<img>")
+              .addClass("content-image")
+              .attr("src", imageSrc);
+            const text = $("<span>")
+              .addClass("content-text")
+              .text(cellDataItem.text);
+            const content = $("<div>")
+              .addClass("content-container")
+              .append(image)
+              .append(text);
+            cellContentElement.empty().append(content);
+          } else {
+            $(`#cell-${j}`).css("visibility", "hidden");
+          }
         } else if (isBackButton(cellDataItem)) {
           const icon = $("<img>")
             .attr("src", "/icones/arrow-left-solid.svg")
@@ -332,7 +337,6 @@ $(document).ready(function () {
       }
     }
   }
-
   function navigateToSubMenu(subMenu, subMenuTitle) {
     menuStack.push({ menu: currentMenu, title: $("#dr-sanna-cell").text() }); // Ajouter le menu actuel et son titre à la pile
     currentMenu = subMenu; // Définir le sous-menu comme le menu actuel
