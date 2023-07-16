@@ -80,7 +80,6 @@ td {
   flex-shrink: 0;
   word-wrap: break-word;
   font-weight: bold;
-  color: black;
   transition: none;
 }
 
@@ -105,7 +104,7 @@ td {
 
 #title-container td {
   border: 1px solid black;
-  background-color: seashell;
+  background-color: gray;
   color: white;
 }
 
@@ -137,7 +136,6 @@ td {
 }
 
 #table-container tr .cell-content {
-  font-size: 15px;
   text-transform: none;
   font-family: Arial, sans-serif;
 }
@@ -172,15 +170,23 @@ td {
 }
 
 .content-image {
-  max-height: 70%;
-  max-width: 100%;
+  height: 100px;  /* Remplacez par la hauteur souhaitée */
+  width: 150px;   /* Remplacez par la largeur souhaitée */
+  object-fit: contain; /* Assure que l'image soit redimensionnée de manière à s'ajuster à la taille donnée tout en maintenant son aspect */
+ margin-top: 20px;
 }
-
 .content-text {
   text-align: center;
   margin-top: 10px;
+  height: 40px;  // Ceci fixera la hauteur du texte à 40px
+  overflow: hidden;  // Ceci cachera tout texte qui dépasserait de cette zone
 }
-
+.no-border-background {
+  border: none !important;
+  background: dimgray !important;
+color: white !important;
+font-size: 18px !important;
+}
 </style>
 </head>
 <body>
@@ -279,20 +285,25 @@ $(document).ready(function () {
 
     initialTitle = $("#dr-sanna-cell").text(); // Sauvegarder le titre initial de dr-sanna-cell
 
-    for (let i = 1; i <= 9; i++) {
-      $(`#cell-${i}`).click(function () {
-        const cellData = cellDataMap[`cell-${i}`];
-        if (cellData) {
-          const index = i + 1;
-          const cellDataItem = currentMenu[index.toString()];
-          if (isBackButton(cellDataItem)) {
-            goBack();
-          } else if (isSubMenu(cellDataItem) && !isSubMenuActive) {
-            navigateToSubMenu(cellData, cellDataItem);
-          }
+for (let i = 1; i <= 9; i++) {
+  $(`#cell-${i}`).addClass("no-border-background");
+  $(`#cell-${i}`).click(function () {
+    const cellData = cellDataMap[`cell-${i}`];
+    if (cellData) {
+      const index = i + 1;
+      const cellDataItem = currentMenu[index.toString()];
+      if (isBackButton(cellDataItem)) {
+        goBack();
+      } else if (isSubMenu(cellDataItem) && !isSubMenuActive) {
+        // Remove class from all cells here, not just the clicked one
+        for (let j = 1; j <= 9; j++) {
+          $(`#cell-${j}`).removeClass("no-border-background");
         }
-      });
+        navigateToSubMenu(cellData, cellDataItem);
+      }
     }
+  });
+}
   });
 
   function updateCells(cellData) {
@@ -347,6 +358,9 @@ $(document).ready(function () {
 
   function goBack() {
     if (menuStack.length > 0) {
+for (let i = 1; i <= 9; i++) {
+  $(`#cell-${i}`).addClass("no-border-background");
+}
       const previousMenu = menuStack.pop(); // Récupérer le menu précédent depuis la pile
       currentMenu = previousMenu.menu; // Définir le menu précédent comme le menu actuel
       updateCells(currentMenu); // Mettre à jour les cellules avec les données du menu précédent
@@ -370,10 +384,6 @@ $(document).ready(function () {
 
 </script>
 
-
-
-
-
      <script>
 $(window).on("load", function() {
     if ('fonts' in document) {
@@ -390,4 +400,3 @@ $(window).on("load", function() {
     </script>
 </body>
 </html>
-
