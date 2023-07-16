@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Dr Sanna</title>
+    <link rel="preload" href="/icones/arrow-left-solid.svg" as="image">
+           <style>
+  #loader {
+  transition: all 0.3s ease-out;
+  opacity: 1;
+  visibility: visible;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background: black;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loader.fadeOut {
+  opacity: 0;
+  visibility: hidden;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+background: dimgray
+}
+
+#title-container {
+  width: 33.33%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: white;
+}
+
+#table-container {
+  width: 66.67%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 50px;
+}
+
+table {
+  border-collapse: separate;
+  width: 100%;
+  height: 100%;
+}
+
+td {
+  background-color: seashell;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+
+.cell-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  word-wrap: break-word;
+  font-weight: bold;
+  color: black;
+  transition: none;
+}
+
+.square-cell {
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  padding: 10px;
+  position: relative;
+}
+
+.square-cell .cell-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#title-container td {
+  border: 1px solid black;
+  background-color: seashell;
+  color: white;
+}
+
+#title-container tr:first-child .cell-content {
+  font-size: 1.2em;
+  font-family: "Arial Black", Arial, sans-serif;
+}
+
+#table-container > table {
+  border-collapse: separate;
+  width: 100%;
+  height: 100%;
+}
+
+#table-container td {
+  position: relative;
+  z-index: 0;
+  border: 2px solid black;
+}
+
+#table-container td:hover {
+  cursor: pointer;
+  transform: scale(1.2) translateZ(0);
+  border: 2px solid black;
+  border-radius: 25px;
+  outline: 5px solid indianred;;
+  z-index: 1;
+  background-color: seashell;
+}
+
+#table-container tr .cell-content {
+  font-size: 15px;
+  text-transform: none;
+  font-family: Arial, sans-serif;
+}
+
+.cell-content a {
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell-content a:hover {
+  background-color: transparent;
+}
+
+.arrow-left-icon {
+  width: 8em;
+  height: 8em; 
+}
+.hidden {
+  display: none;
+}
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.content-image {
+  max-height: 70%;
+  max-width: 100%;
+}
+
+.content-text {
+  text-align: center;
+  margin-top: 10px;
+}
+
+</style>
+</head>
+<body>
+        <div id="loader">
+       <img src="https://i.giphy.com/media/Rk3PlFCDTXAKBjWUvR/giphy.webp" alt="Loading...">
+    </div>
+    <div id="title-container">
+        <table>
+        <tr>
+            <td style="height: 33.33%;">
+                <div id="dr-sanna-cell" class="cell-content">DR SANNA'S COURSES TOOL</div>
+            </td>
+        </tr>
+            <tr>
+                <td style="height: 66.67%;"><div class="cell-content"></div></td>
+            </tr>
+        </table>
+    </div>
+    <div id="table-container">
+        <table>
+            <tr>
+                <td class="square-cell" id="cell-1"><div class="cell-content"></div></td>
+                <td class="square-cell" id="cell-2"><div class="cell-content"></div></td>
+                <td class="square-cell" id="cell-3"><div class="cell-content"></div></td>
+            </tr>
+            <tr>
+                <td class="square-cell" id="cell-4"><div class="cell-content"></div></td>
+                <td class="square-cell" id="cell-5"><div class="cell-content"></div></td>
+                <td class="square-cell" id="cell-6"><div class="cell-content"></div></td>
+            </tr>
+            <tr>
+                <td class="square-cell" id="cell-7"><div class="cell-content"></div></td>
+                <td class="square-cell" id="cell-8"><div class="cell-content"></div></td>
+                <td class="square-cell" id="cell-9"><div class="cell-content"></div></td>
+            </tr>
+        </table>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+  let menuStack = []; // Pile pour stocker les menus visités
+  let currentMenu = {}; // Menu actuellement affiché
+  let initialTitle = ''; // Titre initial de dr-sanna-cell
+  let isSubMenuActive = false; // Indique si un sous-menu est actuellement affiché
+
+  const imageFolder = "/icones/"; // Dossier des images à précharger
+
+  // Récupérer la liste des noms de fichiers d'images du dossier
+  $.ajax({
+    url: imageFolder,
+    success: function (data) {
+      const imageFileNames = [];
+      $(data)
+        .find("a")
+        .attr("href", function (i, fileName) {
+          if (fileName.match(/\.(jpe?g|png|gif)$/)) {
+            imageFileNames.push(fileName);
+          }
+        });
+
+      // Préchargement des images du dossier
+      const preloadedImages = [];
+      let imagesLoaded = 0;
+
+      function preloadImages() {
+        for (let i = 0; i < imageFileNames.length; i++) {
+          const imageSrc = imageFolder + imageFileNames[i];
+          const image = new Image();
+          image.onload = function () {
+            imagesLoaded++;
+            if (imagesLoaded === imageFileNames.length) {
+              $("#loader").fadeOut("slow");
+            }
+          };
+          image.src = imageSrc;
+          preloadedImages.push(image);
+        }
+      }
+
+      if (imageFileNames.length > 0) {
+        preloadImages();
+      } else {
+        $("#loader").fadeOut("slow");
+      }
+    },
+  });
+
+  $.getJSON("/data/MainMenu.json", function (data) {
+    const cellDataMap = {};
+    data.forEach((item) => {
+      cellDataMap[item["1"]] = item;
+    });
+
+    currentMenu = cellDataMap["MainMenu"];
+    updateCells(currentMenu);
+
+    initialTitle = $("#dr-sanna-cell").text(); // Sauvegarder le titre initial de dr-sanna-cell
+
+    for (let i = 1; i <= 9; i++) {
+      $(`#cell-${i}`).click(function () {
+        const cellData = cellDataMap[`cell-${i}`];
+        if (cellData) {
+          const index = i + 1;
+          const cellDataItem = currentMenu[index.toString()];
+          if (isBackButton(cellDataItem)) {
+            goBack();
+          } else if (isSubMenu(cellDataItem) && !isSubMenuActive) {
+            navigateToSubMenu(cellData, cellDataItem);
+          }
+        }
+      });
+    }
+  });
+
+  function updateCells(cellData) {
+    for (let j = 1; j <= 9; j++) {
+      $(`#cell-${j} .cell-content`).empty();
+      $(`#cell-${j}`).css("visibility", "visible");
+    }
+    for (let j = 1; j <= 9; j++) {
+      const cellContentElement = $(`#cell-${j} .cell-content`);
+      const cellDataItem = cellData[j + 1];
+      if (cellDataItem) {
+        if (
+          typeof cellDataItem === "object" &&
+          cellDataItem.hasOwnProperty("text") &&
+          cellDataItem.hasOwnProperty("image")
+        ) {
+          const imageSrc = cellDataItem.image;
+          const image = $("<img>")
+            .addClass("content-image")
+            .attr("src", imageSrc);
+          const text = $("<span>")
+            .addClass("content-text")
+            .text(cellDataItem.text);
+          const content = $("<div>")
+            .addClass("content-container")
+            .append(image)
+            .append(text);
+          cellContentElement.empty().append(content);
+        } else if (isBackButton(cellDataItem)) {
+          const icon = $("<img>")
+            .attr("src", "/icones/arrow-left-solid.svg")
+            .addClass("arrow-left-icon");
+          cellContentElement.empty().append(icon);
+        }
+      } else {
+        $(`#cell-${j}`).css("visibility", "hidden");
+      }
+    }
+  }
+
+  function navigateToSubMenu(subMenu, subMenuTitle) {
+    menuStack.push({ menu: currentMenu, title: $("#dr-sanna-cell").text() }); // Ajouter le menu actuel et son titre à la pile
+    currentMenu = subMenu; // Définir le sous-menu comme le menu actuel
+    updateCells(subMenu); // Mettre à jour les cellules avec les données du sous-menu
+    $("#dr-sanna-cell").text(subMenuTitle.text); // Afficher le titre du sous-menu
+    isSubMenuActive = true; // Activer l'état du sous-menu
+  }
+
+  function goBack() {
+    if (menuStack.length > 0) {
+      const previousMenu = menuStack.pop(); // Récupérer le menu précédent depuis la pile
+      currentMenu = previousMenu.menu; // Définir le menu précédent comme le menu actuel
+      updateCells(currentMenu); // Mettre à jour les cellules avec les données du menu précédent
+      $("#dr-sanna-cell").text(previousMenu.title); // Afficher le titre du menu précédent
+      isSubMenuActive = false; // Désactiver l'état du sous-menu
+    }
+  }
+
+  function isBackButton(cellDataItem) {
+    return cellDataItem === "/icones/arrow-left-solid.svg";
+  }
+
+  function isSubMenu(cellDataItem) {
+    return (
+      typeof cellDataItem === "object" &&
+      cellDataItem.hasOwnProperty("text") &&
+      cellDataItem.hasOwnProperty("image")
+    );
+  }
+});
+
+</script>
+
+
+
+
+
+     <script>
+$(window).on("load", function() {
+    if ('fonts' in document) {
+        Promise.all([
+            document.fonts.load('1em Arial Black')
+        ]).then(function () {
+            $("#loader").fadeOut("slow");
+        });
+    } else {
+        // Fallback for browsers that do not support the font loading API
+        $("#loader").fadeOut("slow");
+    }
+});
+    </script>
+</body>
+</html>
+
