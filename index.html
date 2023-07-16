@@ -178,12 +178,14 @@ td {
 .content-text {
   text-align: center;
   margin-top: 10px;
+  margin-left: 20px;  /* Ajoute une marge à l'intérieur de la gauche de la cellule */
+  margin-right: 20px;  /* Ajoute une marge à l'intérieur de la droite de la cellule */
   height: 40px;  // Ceci fixera la hauteur du texte à 40px
   overflow: hidden;  // Ceci cachera tout texte qui dépasserait de cette zone
 }
 .no-border-background {
   border: none !important;
-  background: dimgray !important;
+  background: gray !important;
 color: white !important;
 font-size: 18px !important;
 }
@@ -383,6 +385,10 @@ for (let i = 1; i <= 9; i++) {
 });
 
 </script>
+
+
+
+
 
      <script>
 $(window).on("load", function() {
