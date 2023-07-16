@@ -117,20 +117,23 @@ td {
   border-collapse: separate;
   width: 100%;
   height: 100%;
+border-spacing: 5px;
 }
 
 #table-container td {
+border-radius: 5px;
   position: relative;
   z-index: 0;
   border: 2px solid black;
+box-sizing: border-box;
 }
 
 #table-container td:hover {
   cursor: pointer;
-  transform: scale(1.2) translateZ(0);
+  transform: scale(1.25) translateZ(0);
   border: 2px solid black;
   border-radius: 25px;
-  outline: 5px solid indianred;;
+  outline: 5px solid indianred;
   z-index: 1;
   background-color: seashell;
 }
@@ -171,7 +174,7 @@ td {
 
 .content-image {
   height: 100px;  /* Remplacez par la hauteur souhaitée */
-  width: 150px;   /* Remplacez par la largeur souhaitée */
+  width: 120px;   /* Remplacez par la largeur souhaitée */
   object-fit: contain; /* Assure que l'image soit redimensionnée de manière à s'ajuster à la taille donnée tout en maintenant son aspect */
  margin-top: 20px;
 }
@@ -184,10 +187,18 @@ td {
   overflow: hidden;  // Ceci cachera tout texte qui dépasserait de cette zone
 }
 .no-border-background {
-  border: none !important;
-  background: gray !important;
+box-sizing: border-box;
+border: 2px solid transparent !important;
+  background: gray;
 color: white !important;
-font-size: 18px !important;
+font-size: 15px !important;
+}
+#table-container td.no-border-background:hover {
+box-sizing: border-box;
+  background: gray; /* Couleur d'arrière-plan au survol */
+border: 2px solid black !important;
+outline: 5px solid gold;
+  /* Ajoutez ici d'autres styles ou effets que vous souhaitez appliquer */
 }
 </style>
 </head>
@@ -226,7 +237,7 @@ font-size: 18px !important;
             </tr>
         </table>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function () {
   let menuStack = []; // Pile pour stocker les menus visités
@@ -287,25 +298,26 @@ $(document).ready(function () {
 
     initialTitle = $("#dr-sanna-cell").text(); // Sauvegarder le titre initial de dr-sanna-cell
 
-for (let i = 1; i <= 9; i++) {
-  $(`#cell-${i}`).addClass("no-border-background");
-  $(`#cell-${i}`).click(function () {
-    const cellData = cellDataMap[`cell-${i}`];
-    if (cellData) {
-      const index = i + 1;
-      const cellDataItem = currentMenu[index.toString()];
-      if (isBackButton(cellDataItem)) {
-        goBack();
-      } else if (isSubMenu(cellDataItem) && !isSubMenuActive) {
-        // Remove class from all cells here, not just the clicked one
-        for (let j = 1; j <= 9; j++) {
-          $(`#cell-${j}`).removeClass("no-border-background");
+    for (let i = 1; i <= 9; i++) {
+      $(`#cell-${i}`).addClass("no-border-background");
+      $(`#cell-${i}`).click(function () {
+        const cellData = cellDataMap[`cell-${i}`];
+        if (cellData) {
+          const index = i + 1;
+          const cellDataItem = currentMenu[index.toString()];
+          if (isBackButton(cellDataItem)) {
+            goBack();
+          } else if (isSubMenu(cellDataItem) && !isSubMenuActive) {
+            for (let j = 1; j <= 9; j++) {
+              $(`#cell-${j}`).removeClass("no-border-background");
+            }
+            navigateToSubMenu(cellData, cellDataItem);
+          } else if (cellDataItem.hasOwnProperty("link") && cellDataItem.link) {
+            window.open(cellDataItem.link, '_blank');
+          }
         }
-        navigateToSubMenu(cellData, cellDataItem);
-      }
+      });
     }
-  });
-}
   });
 
   function updateCells(cellData) {
@@ -322,7 +334,6 @@ for (let i = 1; i <= 9; i++) {
           cellDataItem.hasOwnProperty("text") &&
           cellDataItem.hasOwnProperty("image")
         ) {
-          // Check if text is not null
           if (cellDataItem.text) {
             const imageSrc = cellDataItem.image;
             const image = $("<img>")
@@ -350,24 +361,25 @@ for (let i = 1; i <= 9; i++) {
       }
     }
   }
+
   function navigateToSubMenu(subMenu, subMenuTitle) {
-    menuStack.push({ menu: currentMenu, title: $("#dr-sanna-cell").text() }); // Ajouter le menu actuel et son titre à la pile
-    currentMenu = subMenu; // Définir le sous-menu comme le menu actuel
-    updateCells(subMenu); // Mettre à jour les cellules avec les données du sous-menu
-    $("#dr-sanna-cell").text(subMenuTitle.text); // Afficher le titre du sous-menu
-    isSubMenuActive = true; // Activer l'état du sous-menu
+    menuStack.push({ menu: currentMenu, title: $("#dr-sanna-cell").text() });
+    currentMenu = subMenu;
+    updateCells(subMenu);
+    $("#dr-sanna-cell").text(subMenuTitle.text);
+    isSubMenuActive = true;
   }
 
   function goBack() {
     if (menuStack.length > 0) {
-for (let i = 1; i <= 9; i++) {
-  $(`#cell-${i}`).addClass("no-border-background");
-}
-      const previousMenu = menuStack.pop(); // Récupérer le menu précédent depuis la pile
-      currentMenu = previousMenu.menu; // Définir le menu précédent comme le menu actuel
-      updateCells(currentMenu); // Mettre à jour les cellules avec les données du menu précédent
-      $("#dr-sanna-cell").text(previousMenu.title); // Afficher le titre du menu précédent
-      isSubMenuActive = false; // Désactiver l'état du sous-menu
+      for (let i = 1; i <= 9; i++) {
+        $(`#cell-${i}`).addClass("no-border-background");
+      }
+      const previousMenu = menuStack.pop();
+      currentMenu = previousMenu.menu;
+      updateCells(currentMenu);
+      $("#dr-sanna-cell").text(previousMenu.title);
+      isSubMenuActive = false;
     }
   }
 
@@ -383,13 +395,7 @@ for (let i = 1; i <= 9; i++) {
     );
   }
 });
-
 </script>
-
-
-
-
-
      <script>
 $(window).on("load", function() {
     if ('fonts' in document) {
