@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    *, *:before, *:after {
+        box-sizing: border-box;
+    }
+
+    html, body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        background-color: #1a1a1a;
+    }
+iframe {
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+    .container {
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
+
+    .left {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border-right: 1px solid #000; /* Bordure droite */
+    }
+
+    .left .box {
+        overflow: hidden;
+        border-bottom: 1px solid #000; /* Bordure inférieure */
+    }
+
+    /* Configuration pour 1/3 et 2/3 */
+    .left .box:first-child {
+        flex: 1;
+    }
+
+    .left .box:last-child {
+        flex: 2;
+        border-bottom: none; /* Pas de bordure inférieure sur la dernière boîte */
+    }
+
+    .right {
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+  .right {
+    background-color: dimgray;
+  }
+
+    th, td {
+        border: 1px solid black;
+        padding: 5px;
+        font-family: Arial, sans-serif;
+    }
+
+    .lesion-buccale {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .definition {
+        text-align: justify;
+    }
+
+    .centrer {
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+      <div class="left">
+          <div class="box">
+              <iframe src="/MOCO/main-lesions-buccales.html"></iframe>
+          </div>
+          <div class="box">
+              <iframe src="default.html"></iframe>
+          </div>
+      </div>
+      <div class="right">
+          <table id="myTable">
+              <tr>
+                  <th>Lesion</th>
+                  <td class="lesion-buccale"></td>
+              </tr>
+              <tr>
+                  <th>Definition</th>
+                  <td class="definition"></td>
+              </tr>
+              <tr>
+                  <th>Etiologie</th>
+                  <td class="centrer"></td>
+              </tr>
+              <tr>
+                  <th>Traitement</th>
+                  <td class="centrer"></td>
+              </tr>
+          </table>
+      </div>
+  </div>
+
+<script>
+  window.addEventListener('message', function(event) {
+    var message = event.data;
+    if (message.type === 'url') {
+      var url = message.value;
+      var iframeTableau = document.querySelector('.left .box:last-child iframe');
+      iframeTableau.src = url;
+    } else if (message.type === 'dataId') {
+      var dataId = message.value;
+      fetch('/data/MyArray.json')
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          // Avec la nouvelle structure, vous pouvez simplement utiliser la clé pour accéder aux données
+          var rowData = data[dataId];
+          if (rowData) {
+            var table = document.getElementById('myTable');
+            table.rows[0].cells[1].textContent = rowData.Nom;
+            table.rows[1].cells[1].textContent = rowData.Définition;
+            table.rows[2].cells[1].textContent = rowData.Etiologie;
+            table.rows[3].cells[1].textContent = rowData.Traitement;
+          }
+        })
+        .catch(function(error) {
+          console.log('Erreur lors du chargement du fichier JSON :', error);
+        });
+    }
+  });
+</script>
+
+
+</body>
+</html>
+
