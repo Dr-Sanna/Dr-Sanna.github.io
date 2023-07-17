@@ -1,0 +1,104 @@
+{
+    "la-glossite-exfoliatrice-marginee-ou-langue-geographique": {
+        "Nom": "La glossite exfoliatrice marginée ou langue géographique",
+        "Définition": "Inflammation de la langue présentant des zones dépapillées de forme géographique.",
+        "Etiologie": "Inconnue",
+        "Traitement": "Traitement symptomatique"
+    },
+    "white-sponge-naevus": {
+        "Nom": "White sponge-naevus",
+        "Définition": "Affection héréditaire caractérisée par des plaques blanches et épaisses dans la muqueuse buccale.",
+        "Etiologie": "Mutation génétique",
+        "Traitement": "Aucun traitement spécifique"
+    },
+    "le-lichen-plan-buccal-dans-sa-forme-hyperkeratosique": {
+        "Nom": "Le lichen plan buccal dans sa forme hyperkératosique",
+        "Définition": "Maladie inflammatoire chronique qui affecte la muqueuse buccale, se présentant sous forme de lésions blanches et réticulées.",
+        "Etiologie": "Cause inconnue",
+        "Traitement": "Traitement symptomatique : corticostéroïdes topiques et/ou généraux"
+    },
+    "candidose-pseudo-membraneuse": {
+        "Nom": "Candidose pseudo-membraneuse",
+        "Définition": "Infection fongique caractérisée par des plaques blanches qui se détachent facilement de la muqueuse buccale.",
+        "Etiologie": "Candida albicans",
+        "Traitement": "Antifongiques topiques ou systémiques"
+    },
+    "leucoplasie-orale-chevelue": {
+        "Nom": "Leucoplasie orale chevelue",
+        "Définition": "Lésion précancéreuse de la muqueuse buccale caractérisée par des plaques blanches et poilues.",
+        "Etiologie": "Facteurs multiples, y compris le tabagisme et l'alcoolisme",
+        "Traitement": "Surveiller les changements et enlever les lésions suspectes"
+    },
+    "keratose-frictionnelle": {
+        "Nom": "Kératose frictionnelle",
+        "Définition": "Épaississement de la muqueuse buccale dû à une irritation chronique ou au frottement.",
+        "Etiologie": "Irritation mécanique, par exemple, les prothèses dentaires mal ajustées",
+        "Traitement": "Éliminer la cause de l'irritation"
+    },
+    "ouranite-glandulaire-ou-nicotinique": {
+        "Nom": "Ouranite glandulaire ou nicotinique",
+        "Définition": "Hypertrophie des glandes salivaires due à une consommation excessive de tabac ou de nicotine.",
+        "Etiologie": "Consommation de tabac ou de nicotine",
+        "Traitement": "Arrêt de la consommation de tabac ou de nicotine"
+    },
+    "leucoplasies-homogenes": {
+        "Nom": "Leucoplasies homogènes",
+        "Définition": "Lésions blanches planes et uniformes qui peuvent être précancéreuses.",
+        "Etiologie": "Cause inconnue",
+        "Traitement": "Surveiller les changements et enlever les lésions suspectes"
+    },
+    "leucoplasies-inhomogenes": {
+        "Nom": "Leucoplasies inhomogènes",
+        "Définition": "Lésions blanches irrégulières qui peuvent être précancéreuses.",
+        "Etiologie": "Cause inconnue",
+        "Traitement": "Surveiller les changements et enlever les lésions suspectes"
+    },
+    "degenerescence-d'une-leucoplasie-:-carcinome-epidermoide": {
+        "Nom": "Dégénérescence d'une leucoplasie : carcinome épidermoïde",
+        "Définition": "Transformation d'une leucoplasie précancéreuse en un carcinome épidermoïde.",
+        "Etiologie": "Facteurs multiples, y compris le tabagisme et l'alcoolisme",
+        "Traitement": "Chirurgie, radiothérapie, chimiothérapie"
+    },
+    "papillomatose-orale-floride": {
+        "Nom": "Papillomatose orale floride",
+        "Définition": "Croissance excessive et bénigne de papillomes dans la bouche.",
+        "Etiologie": "Inconnue",
+        "Traitement": "Aucun traitement spécifique"
+    },
+    "granulations-de-fordyce": {
+        "Nom": "Granulations de Fordyce",
+        "Définition": "Apparition de petites protubérances jaunâtres ou blanchâtres dans la muqueuse buccale.",
+        "Etiologie": "Hypertrophie des glandes sébacées",
+        "Traitement": "Aucun traitement nécessaire"
+    },
+    "leucoedeme": {
+        "Nom": "Leucoedème",
+        "Définition": "Gonflement indolore de la muqueuse buccale dû à une accumulation de liquide.",
+        "Etiologie": "Cause inconnue",
+        "Traitement": "Aucun traitement nécessaire"
+    },
+    "candidose-chronique": {
+        "Nom": "Candidose chronique",
+        "Définition": "Infection fongique chronique caractérisée par des lésions blanches dans la bouche.",
+        "Etiologie": "Candida albicans",
+        "Traitement": "Antifongiques topiques ou systémiques"
+    },
+    "linea-alba": {
+        "Nom": "Linea Alba",
+        "Définition": "Ligne blanche fine qui apparaît sur la joue à la suite d'un frottement répété.",
+        "Etiologie": "Irritation mécanique, par exemple, le grincement des dents",
+        "Traitement": "Éliminer la cause de l'irritation"
+    },
+    "tics-de-mordillement": {
+        "Nom": "Tics de mordillement",
+        "Définition": "Habitude de mordiller ou de sucer certaines parties de la bouche.",
+        "Etiologie": "Facteurs psychologiques et comportementaux",
+        "Traitement": "Thérapie comportementale et prévention des habitudes nuisibles"
+    },
+    "langue-villeuse-ou-saburrale": {
+        "Nom": "Langue villeuse ou saburrale",
+        "Définition": "Condition bénigne caractérisée par une langue recouverte de papilles filiformes allongées.",
+        "Etiologie": "Cause inconnue",
+        "Traitement": "Aucun traitement nécessaire"
+    }
+}
