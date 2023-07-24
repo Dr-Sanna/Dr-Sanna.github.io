@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>Dr Sanna</title>
+    <title>Dr Sanna</title> 
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="preload" href="/icones/arrow-left-solid.svg" as="image">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
            <style>
   #loader {
   transition: all 0.3s ease-out;
@@ -31,9 +34,9 @@ html, body {
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   display: flex;
-background: dimgray
+background: #292d33
 }
 
 #title-container {
@@ -45,6 +48,8 @@ background: dimgray
   justify-content: center;
   padding: 20px;
   color: white;
+background: #1A1A1A;
+box-shadow: 10px 0px 15px rgba(0, 0, 0, 0.2);
 }
 
 #table-container {
@@ -64,11 +69,12 @@ table {
 }
 
 td {
-  background-color: seashell;
+  background-color: #434952;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
   z-index: 0;
+font-size: 15px;
 }
 
 .cell-content {
@@ -104,13 +110,15 @@ td {
 
 #title-container td {
   border: 1px solid black;
-  background-color: gray;
+  background-color: #434952;
   color: white;
+border-radius: 5px;
 }
 
 #title-container tr:first-child .cell-content {
   font-size: 1.2em;
-  font-family: "Arial Black", Arial, sans-serif;
+    font-family: "Roboto", sans-serif;
+  font-weight: bold; /* ou 700 pour Roboto Bold */
 }
 
 #table-container > table {
@@ -124,8 +132,9 @@ border-spacing: 5px;
 border-radius: 5px;
   position: relative;
   z-index: 0;
-  border: 2px solid black;
+  border: 2px solid transparent;
 box-sizing: border-box;
+color: white;
 }
 
 #table-container td:hover {
@@ -133,14 +142,15 @@ box-sizing: border-box;
   transform: scale(1.25) translateZ(0);
   border: 2px solid black;
   border-radius: 25px;
-  outline: 5px solid indianred;
+  outline: 5px solid gold;
   z-index: 1;
-  background-color: seashell;
+  background-color: #434952;
 }
 
 #table-container tr .cell-content {
   text-transform: none;
-  font-family: Arial, sans-serif;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400; /* pour Roboto Light */
 }
 
 .cell-content a {
@@ -186,25 +196,15 @@ box-sizing: border-box;
   height: 40px;  // Ceci fixera la hauteur du texte à 40px
   overflow: hidden;  // Ceci cachera tout texte qui dépasserait de cette zone
 }
-.no-border-background {
-box-sizing: border-box;
-border: 2px solid transparent !important;
-  background: gray;
-color: white !important;
-font-size: 15px !important;
-}
-#table-container td.no-border-background:hover {
-box-sizing: border-box;
-  background: gray; /* Couleur d'arrière-plan au survol */
-border: 2px solid black !important;
-outline: 5px solid gold;
-  /* Ajoutez ici d'autres styles ou effets que vous souhaitez appliquer */
-}
+
 </style>
 </head>
 <body>
-        <div id="loader">
-       <img src="https://i.giphy.com/media/Rk3PlFCDTXAKBjWUvR/giphy.webp" alt="Loading...">
+   <div id="loader">
+       <div style="text-align:center; color: white;">
+         <img src="https://i.giphy.com/media/Rk3PlFCDTXAKBjWUvR/giphy.webp" alt="Loading...">
+         <p id="loaderStatus">Initialisation...</p>
+       </div>
     </div>
     <div id="title-container">
         <table>
@@ -237,95 +237,86 @@ outline: 5px solid gold;
             </tr>
         </table>
     </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(document).ready(function () {
-  let menuStack = []; // Pile pour stocker les menus visités
-  let currentMenu = {}; // Menu actuellement affiché
-  let initialTitle = ''; // Titre initial de dr-sanna-cell
-  let isSubMenuActive = false; // Indique si un sous-menu est actuellement affiché
 
-  const imageFolder = "/icones/"; // Dossier des images à précharger
+    <script>
+    const imageFileNames = []; // Liste des noms de fichiers d'images à précharger
+    let imagesLoaded = 0;
 
-  // Récupérer la liste des noms de fichiers d'images du dossier
-  $.ajax({
-    url: imageFolder,
-    success: function (data) {
-      const imageFileNames = [];
-      $(data)
-        .find("a")
-        .attr("href", function (i, fileName) {
-          if (fileName.match(/\.(jpe?g|png|gif)$/)) {
-            imageFileNames.push(fileName);
+    let menuStack = []; // Pile pour stocker les menus visités
+    let currentMenu = {}; // Menu actuellement affiché
+    let initialTitle = ''; // Titre initial de dr-sanna-cell
+    let isSubMenuActive = false; // Indique si un sous-menu est actuellement affiché
+
+function preloadImages() {
+  return new Promise((resolve) => {
+    for (let i = 0; i < imageFileNames.length; i++) {
+      const imageSrc = imageFileNames[i];
+      const image = new Image();
+      image.onload = function () {
+        imagesLoaded++;
+        $("#loaderStatus").text(`Chargement des images ${imagesLoaded} sur ${imageFileNames.length}`);
+        if (imagesLoaded === imageFileNames.length) {
+          $("#loaderStatus").text("Images chargées, mise à jour des cellules...");
+          resolve();
+        }
+      };
+      image.src = imageSrc;
+    }
+  });
+}
+
+    $(document).ready(function () {
+      $.getJSON("/data/MainMenu.json", function (data) {
+        const cellDataMap = {};
+        data.forEach((item) => {
+          cellDataMap[item["1"]] = item;
+          for (let i = 2; i <= 10; i++) {
+            const cellDataItem = item[i.toString()];
+            if (cellDataItem && cellDataItem.hasOwnProperty("image") && cellDataItem.image) {
+              imageFileNames.push(cellDataItem.image);
+            }
           }
         });
 
-      // Préchargement des images du dossier
-      const preloadedImages = [];
-      let imagesLoaded = 0;
+        currentMenu = cellDataMap["MainMenu"];
 
-      function preloadImages() {
-        for (let i = 0; i < imageFileNames.length; i++) {
-          const imageSrc = imageFolder + imageFileNames[i];
-          const image = new Image();
-          image.onload = function () {
-            imagesLoaded++;
-            if (imagesLoaded === imageFileNames.length) {
-              $("#loader").fadeOut("slow");
+        initialTitle = $("#dr-sanna-cell").text(); // Sauvegarder le titre initial de dr-sanna-cell
+
+        for (let i = 1; i <= 9; i++) {
+          $(`#cell-${i}`).addClass("no-border-background");
+          $(`#cell-${i}`).click(function () {
+            const cellData = cellDataMap[`cell-${i}`];
+            if (cellData) {
+              const index = i + 1;
+              const cellDataItem = currentMenu[index.toString()];
+              if (isBackButton(cellDataItem)) {
+                goBack();
+              } else if (isSubMenu(cellDataItem) && !isSubMenuActive) {
+                for (let j = 1; j <= 9; j++) {
+                  $(`#cell-${j}`).removeClass("no-border-background");
+                }
+                navigateToSubMenu(cellData, cellDataItem);
+              } else if (cellDataItem.hasOwnProperty("link") && cellDataItem.link) {
+                window.open(cellDataItem.link, '_blank');
+              }
             }
-          };
-          image.src = imageSrc;
-          preloadedImages.push(image);
+          });
         }
-      }
 
-      if (imageFileNames.length > 0) {
-        preloadImages();
-      } else {
-        $("#loader").fadeOut("slow");
-      }
-    },
-  });
-
-  $.getJSON("/data/MainMenu.json", function (data) {
-    const cellDataMap = {};
-    data.forEach((item) => {
-      cellDataMap[item["1"]] = item;
-    });
-
-    currentMenu = cellDataMap["MainMenu"];
-    updateCells(currentMenu);
-
-    initialTitle = $("#dr-sanna-cell").text(); // Sauvegarder le titre initial de dr-sanna-cell
-
-    for (let i = 1; i <= 9; i++) {
-      $(`#cell-${i}`).addClass("no-border-background");
-      $(`#cell-${i}`).click(function () {
-        const cellData = cellDataMap[`cell-${i}`];
-        if (cellData) {
-          const index = i + 1;
-          const cellDataItem = currentMenu[index.toString()];
-          if (isBackButton(cellDataItem)) {
-            goBack();
-          } else if (isSubMenu(cellDataItem) && !isSubMenuActive) {
-            for (let j = 1; j <= 9; j++) {
-              $(`#cell-${j}`).removeClass("no-border-background");
-            }
-            navigateToSubMenu(cellData, cellDataItem);
-          } else if (cellDataItem.hasOwnProperty("link") && cellDataItem.link) {
-            window.open(cellDataItem.link, '_blank');
-          }
-        }
+        // Précharger les images, puis mettre à jour les cellules
+        preloadImages().then(() => {
+          updateCells(currentMenu);
+        });
       });
-    }
-  });
 
-  function updateCells(cellData) {
+function updateCells(cellData) {
     for (let j = 1; j <= 9; j++) {
+      $("#loaderStatus").text(`Mise à jour des cellules ${j} sur 9`); // Ajout d'un message de statut de chargement
       $(`#cell-${j} .cell-content`).empty();
       $(`#cell-${j}`).css("visibility", "visible");
     }
     for (let j = 1; j <= 9; j++) {
+
       const cellContentElement = $(`#cell-${j} .cell-content`);
       const cellDataItem = cellData[j + 1];
       if (cellDataItem) {
@@ -360,55 +351,44 @@ $(document).ready(function () {
         $(`#cell-${j}`).css("visibility", "hidden");
       }
     }
+    $("#loaderStatus").text("Chargement terminé, apparition d'un menu incroyable..."); // Ajout d'un message de statut de chargement
+    // Après avoir terminé la mise à jour des cellules, faites disparaître le loader
+    $("#loader").fadeOut("slow", function() {
+      $("#loaderStatus").text(""); // Efface le message de statut de chargement une fois le chargement terminé
+    });
   }
 
-  function navigateToSubMenu(subMenu, subMenuTitle) {
-    menuStack.push({ menu: currentMenu, title: $("#dr-sanna-cell").text() });
-    currentMenu = subMenu;
-    updateCells(subMenu);
-    $("#dr-sanna-cell").text(subMenuTitle.text);
-    isSubMenuActive = true;
-  }
-
-  function goBack() {
-    if (menuStack.length > 0) {
-      for (let i = 1; i <= 9; i++) {
-        $(`#cell-${i}`).addClass("no-border-background");
+      function navigateToSubMenu(subMenu, subMenuTitle) {
+        menuStack.push({ menu: currentMenu, title: $("#dr-sanna-cell").text() });
+        currentMenu = subMenu;
+        updateCells(subMenu);
+        $("#dr-sanna-cell").text(subMenuTitle.text);
+        isSubMenuActive = true;
       }
-      const previousMenu = menuStack.pop();
-      currentMenu = previousMenu.menu;
-      updateCells(currentMenu);
-      $("#dr-sanna-cell").text(previousMenu.title);
-      isSubMenuActive = false;
-    }
-  }
 
-  function isBackButton(cellDataItem) {
-    return cellDataItem === "/icones/arrow-left-solid.svg";
-  }
+      function goBack() {
+        if (menuStack.length > 0) {
+          const previousMenu = menuStack.pop();
+          currentMenu = previousMenu.menu;
+          updateCells(currentMenu);
+          $("#dr-sanna-cell").text(previousMenu.title);
+          isSubMenuActive = false;
+        }
+      }
 
-  function isSubMenu(cellDataItem) {
-    return (
-      typeof cellDataItem === "object" &&
-      cellDataItem.hasOwnProperty("text") &&
-      cellDataItem.hasOwnProperty("image")
-    );
-  }
-});
-</script>
-     <script>
-$(window).on("load", function() {
-    if ('fonts' in document) {
-        Promise.all([
-            document.fonts.load('1em Arial Black')
-        ]).then(function () {
-            $("#loader").fadeOut("slow");
-        });
-    } else {
-        // Fallback for browsers that do not support the font loading API
-        $("#loader").fadeOut("slow");
-    }
-});
+      function isBackButton(cellDataItem) {
+        return cellDataItem === "/icones/arrow-left-solid.svg";
+      }
+
+      function isSubMenu(cellDataItem) {
+        return (
+          typeof cellDataItem === "object" &&
+          cellDataItem.hasOwnProperty("text") &&
+          cellDataItem.hasOwnProperty("image")
+        );
+      }
+    });
     </script>
 </body>
 </html>
+
